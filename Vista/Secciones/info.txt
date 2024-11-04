@@ -1,0 +1,2 @@
+Aquí cargarán usando AJAX, aquellas secciones que queramos traer a la pantalla sin tener que
+refrescar todo el contenido.

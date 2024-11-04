@@ -1,0 +1,354 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.Bienvenida {
+    margin-right: 20px; /* Añade un margen entre el texto y el botón */
+}
+
+.salir {
+    cursor: pointer;
+    padding: 5px 10px; /* Tamaño más pequeño */
+    background-color: #e74c3c; /* Color rojo para resaltar */
+    color: white;
+    border: none;
+    margin-top: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    font-size: 14px; /* Tamaño de letra reducido */
+}
+
+.salir:hover {
+    background-color: #c0392b; /* Color más oscuro al hacer hover */
+}
+
+.navbar {
+    background-color: #333;
+    padding: 15px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.navbar ul {
+    list-style-type: none;
+}
+
+.navbar ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    background-color: #555;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.navbar ul li a:hover {
+    background-color: #777;
+}
+
+.main-content {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.main-content h2 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #2c3e50; /* Color más oscuro para el encabezado */
+    margin-bottom: 10px;
+    text-transform: uppercase; /* Convertir el texto a mayúsculas */
+    letter-spacing: 1.2px; /* Añadir espacio entre letras */
+}
+
+.main-content p {
+    font-size: 18px;
+    color: #7f8c8d; /* Un gris más suave para los párrafos */
+    line-height: 1.5; /* Espaciado entre líneas */
+
+}
+/* Estilo para las tablas */
+.table-container {
+    overflow-x: auto; /* Permitir desplazamiento horizontal si es necesario */
+    margin: 20px; /* Margen alrededor del contenedor de la tabla */
+    border: 1px solid #ddd; /* Borde alrededor del contenedor de la tabla */
+    border-radius: 8px; /* Bordes redondeados del contenedor */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    background-color: white; /* Color de fondo del contenedor */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #333; /* Color de fondo de los encabezados */
+    color: white; /* Color de texto de los encabezados */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Color de fondo para filas pares */
+}
+
+tr:hover {
+    background-color: #e1e1e1; /* Color de fondo al pasar el mouse sobre una fila */
+}
+/*INPUTS TABLA*/
+td input[type="text"], td input[type="email"], td input[type="date"] {
+    width: 100%; /* Los inputs ocuparán todo el ancho de la celda */
+    box-sizing: border-box; /* Asegúrate de que el padding no afecte el ancho */
+}
+
+
+
+button {
+    background-color: #28a745; /* Color de fondo del botón */
+    color: white; /* Color de texto del botón */
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave */
+    width: 100%;
+}
+
+button:hover {
+    background-color: #218838; /* Color de fondo del botón al pasar el mouse */
+}
+.crear{
+    max-width: 99%;
+
+}
+
+.eliminar {
+    width: 100%;
+    background-color: #d71a3c; /* Color de fondo del botón */
+    color: white; /* Color de texto del botón */
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+.eliminar:hover {
+    background-color: #9d142d;
+}
+
+button:disabled {
+    background-color: #ccc; /* Color de fondo del botón deshabilitado */
+    cursor: not-allowed; /* Cambiar cursor para botones deshabilitados */
+}
+
+/*VEHICULOS*/
+/*Modal creación*/
+/* Estilos para el modal */
+#nuevoVehiculoModal {
+    position: fixed; /* Mantener el modal fijo */
+    top: 50%; /* Posicionar el modal verticalmente en el centro */
+    left: 50%; /* Posicionar el modal horizontalmente en el centro */
+    transform: translate(-50%, -50%); /* Centrar el modal */
+    background-color: white; /* Fondo blanco para el modal */
+    padding: 20px; /* Espacio interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
+    display: none; /* Ocultar por defecto */
+    width: 40%;
+}
+
+#nuevoVehiculoModal input[type="text"],
+#nuevoVehiculoModal input[type="number"],
+#nuevoVehiculoModal input[type="date"],
+#nuevoVehiculoModal input[type="file"]{
+    width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
+    padding: 10px; /* Espacio interno */
+    margin-bottom: 15px; /* Margen inferior */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+/* Estilo específico para el campo de subir imagen */
+ {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Estilos para los botones dentro del modal en vehículos */
+#nuevoVehiculoModal button {
+    background-color: #28a745; /* Color de fondo del botón */
+    color: white; /* Color de texto del botón */
+    border: none;
+    padding: 10px 15px; /* Tamaño del botón */
+    margin: 5px; /* Margen entre botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave */
+    width: 48%; /* Dos botones en una fila */
+}
+
+#nuevoVehiculoModal button:hover {
+    background-color: #218838; /* Color de fondo al pasar el mouse */
+}
+
+.cancelarNuevoVehiculo {
+    background-color: #e74c3c; /* Color de fondo para el botón de cancelar */
+}
+
+.cancelarNuevoVehiculo:hover {
+    background-color: #c0392b; /* Color de fondo al pasar el mouse */
+}
+
+/* SEGUROS */
+/* Modal creación */
+/* Estilos para el modal */
+#nuevoSeguroModal {
+    position: fixed; /* Mantener el modal fijo */
+    top: 50%; /* Posicionar el modal verticalmente en el centro */
+    left: 50%; /* Posicionar el modal horizontalmente en el centro */
+    transform: translate(-50%, -50%); /* Centrar el modal */
+    background-color: white; /* Fondo blanco para el modal */
+    padding: 20px; /* Espacio interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
+    display: none; /* Ocultar por defecto */
+    width: 40%;
+}
+
+#nuevoSeguroModal input[type="text"],
+#nuevoSeguroModal input[type="number"],
+#nuevoSeguroModal select {
+    width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
+    padding: 10px; /* Espacio interno */
+    margin-bottom: 15px; /* Margen inferior */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 14px;
+}
+
+/* Estilos para los botones dentro del modal en seguros */
+#nuevoSeguroModal button {
+    background-color: #28a745; /* Color de fondo del botón */
+    color: white; /* Color de texto del botón */
+    border: none;
+    padding: 10px 15px; /* Tamaño del botón */
+    margin: 5px; /* Margen entre botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave */
+    width: 48%; /* Dos botones en una fila */
+}
+
+#nuevoSeguroModal button:hover {
+    background-color: #218838; /* Color de fondo al pasar el mouse */
+}
+
+/* Estilos para el textarea en el modal de seguros */
+#nuevoSeguroModal textarea {
+    width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
+    padding: 10px; /* Espacio interno */
+    margin-bottom: 15px; /* Margen inferior */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    resize: vertical; /* Permitir redimensionar verticalmente */
+    font-size: 14px;
+}
+
+/* Estilos para el textarea en la tabla de seguros */
+#seguros-list textarea {
+    font-size: 14px;
+    width: 100%; /* Ocupa todo el ancho de la celda */
+    padding: 5px; /* Espacio interno */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    resize: vertical; /* Permitir redimensionar verticalmente */
+    height: 50px; /* Altura fija para mantener la consistencia */
+}
+
+.cancelarNuevoSeguro {
+    background-color: #e74c3c; /* Color de fondo para el botón de cancelar */
+}
+
+.cancelarNuevoSeguro:hover {
+    background-color: #c0392b; /* Color de fondo al pasar el mouse */
+}
+
+/*Campos de solo lectura*/
+.readonly-field {
+    display: inline-block; /* Para que tenga un espacio similar a un input */
+    background-color: #f0f0f0; /* Fondo gris claro */
+    padding: 5px; /* Espaciado interno */
+    border-radius: 4px; /* Bordes redondeados */
+    color: #555; /* Color de texto más apagado */
+    font-weight: bold; /* Texto en negrita para destacarlo */
+}
+
+
+/* Estilo para el footer */
+footer {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    /*position: fixed;*/
+    width: 100%;
+    bottom: 0;
+    font-size: 14px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+

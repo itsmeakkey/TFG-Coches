@@ -1,0 +1,82 @@
+* {
+    font-family: Poppins;
+}
+
+body {
+    background-color: #2a76d2;
+    padding: 50px;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}
+
+img {
+    border-radius: 20px;
+
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.6);
+    border-radius: 15px;
+    max-width: 500px;
+    margin: auto;
+    border-radius: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    background-color: #51a14b;
+    cursor: pointer;
+}
+
+button:hover {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    background-color: #3c7738;
+    cursor: pointer;
+}
+
+
+
+button[name="registrar"] {
+    background-color: #156dbb;
+    cursor: pointer;
+
+}
+
+button[name="registrar"]:hover {
+    background-color: #125794;
+    cursor: pointer;
+
+}
+
+.error {
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: larger;
+}

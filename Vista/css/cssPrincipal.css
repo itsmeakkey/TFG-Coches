@@ -1,0 +1,577 @@
+/* Estilos generales */
+body {
+    font-family: Poppins;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Encabezado */
+header {
+    background-color: #2a76d2;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+}
+
+.logo {
+    border-radius: 10px;
+}
+header h1 {
+    font-family: Poppins;
+}
+
+.header-right {
+    float: right;
+    margin-right: 10px;
+}
+
+.Bienvenida {
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.Bienvenida strong {
+    font-weight: bold;
+}
+
+.salir {
+    background-color: white;
+    color: #2a76d2;
+    border: 2px solid white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body {
+    font-family: Poppins, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Encabezado */
+header {
+    background-color: #2a76d2;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+}
+
+.header-right {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+}
+
+.Bienvenida {
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.Bienvenida strong {
+    font-weight: bold;
+}
+
+.salir {
+    background-color: white;
+    color: #2a76d2;
+    border: 2px solid white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.salir:hover {
+    background-color: #e0e7ef;
+    color: #2a76d2;
+}
+
+/* Barra de navegación */
+.navbar {
+    background-color: #2a76d2;
+    overflow: hidden;
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.3); /* Sombra inferior */
+
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    float: left;
+}
+
+.navbar ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.navbar ul li a:hover {
+    background-color: #1d5ca8;
+}
+
+/*Pestaña mis reservas*/
+/* Estilo para el botón de cancelar */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+button.cancelar-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%; /* Ocupa todo el ancho de la celda */
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button.cancelar-btn:hover {
+    background-color: #ff3333;
+    transform: scale(1.05); /* Pequeño zoom al pasar el mouse */
+}
+
+button.cancelar-btn:active {
+    background-color: #cc0000;
+    transform: scale(0.95); /* Efecto de presión al hacer clic */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+table tr:hover {
+    background-color: #f9f9f9;
+}
+
+
+
+
+
+
+/* Contenido principal */
+.main-content {
+    padding: 20px;
+  /*  background-color: white;*/
+    margin: 15px auto;
+    max-width: 800px;
+   /* border: 1px solid #d0d7de; */
+   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centrar texto */
+}
+
+h2 {
+    text-align: center;
+    font-size: 36px; /* Tamaño grande para el encabezado */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+/* Estilos para el formulario de reserva */
+.reserva-form {
+    display: flex; /* Disposición en línea */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 15px; /* Espaciado interno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el contenedor */
+    margin-bottom: 20px; /* Espacio debajo del formulario */
+}
+
+.reserva-form label {
+    margin: 0 10px; /* Espacio horizontal alrededor de las etiquetas */
+    font-weight: bold; /* Negrita para etiquetas */
+}
+
+.reserva-form input[type="date"] {
+    padding: 10px; /* Espaciado interno */
+    margin: 0 10px; /* Espacio horizontal entre campos */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+.reserva-form button {
+    background-color: #2a76d2; /* Color del botón */
+    color: white; /* Color del texto del botón */
+    border: none;
+    padding: 10px 20px; /* Tamaño del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    transition: background-color 0.3s; /* Transición para el hover */
+}
+
+.reserva-form button:hover {
+    background-color: #1d5ca8; /* Color más oscuro al pasar el ratón */
+}
+
+/* Grid de búsqueda de reservas */
+.reservar-btn {
+    background-color: #28a745; /* Color de fondo del botón */
+    color: white; /* Color de texto del botón */
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave */
+    width: 100%;
+}
+.reservar-btn:hover{
+    background-color: #218838;
+}
+/*Diseño de tarjetas para Nuestros coches*/
+.car-grid {
+    font-family: Arial;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Tres columnas */
+    gap: 20px; /* Espacio entre los coches */
+    margin-top: 20px; /* Espacio encima del grid */
+}
+
+.car-card {
+    background-color: white; /* Fondo blanco para las tarjetas */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 15px; /* Espaciado interno */
+    text-align: center; /* Centrar texto */
+}
+
+.car-image {
+    width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
+    height: 120px; /* Altura fija para todas las imágenes */
+    width: 200px;
+    object-fit: cover; /* Recorta la imagen si es más grande, manteniendo el aspecto */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/*Estilo modal seguros*/
+.modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo para la sección de seguros */
+.seguros-section {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Estilo para el botón de confirmación */
+.confirm-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.confirm-btn:hover {
+    background-color: #45a049;
+}
+
+/*Menú seguros*/
+.seguros-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas del mismo tamaño */
+    gap: 20px; /* Espacio entre las columnas */
+    margin-top: 20px;
+}
+
+.seguro-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+    grid-column: span 2; /* Hace que el encabezado ocupe las dos columnas */
+    margin-top: 40px;
+}
+
+/*Menú de perfil*/
+#perfil {
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#perfil h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#perfil p {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+}
+
+#perfil p b {
+    color: #222;
+}
+
+#perfil button {
+    display: block;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#perfil button:hover {
+    background-color: #45a049;
+}
+
+#formularioEditar {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    display: none;
+}
+
+#formularioEditar h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilo para la sección de perfil */
+#perfil {
+    background-color: #f4f4f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#perfil h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#perfil p {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+}
+
+#perfil p b {
+    color: #222;
+}
+
+#perfil button {
+    display: block;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#perfil button:hover {
+    background-color: #45a049;
+}
+
+/* Contenedor del formulario */
+#formularioEditar {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+    display: none;
+}
+
+/* Estilo del formulario en grid */
+#formEditarPerfil {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    grid-gap: 20px;
+    align-items: center;
+}
+
+/* Grupo de input con etiquetas */
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+/* Estilo para los botones */
+.form-buttons {
+    grid-column: 1 / span 2; /* Los botones ocupan ambas columnas */
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    width: 48%; /* Cada botón ocupa casi la mitad del ancho */
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Botón de guardar */
+.form-buttons button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.form-buttons button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Botón de cancelar */
+.form-buttons button[type="button"] {
+    background-color: #f44336;
+    color: white;
+}
+
+.form-buttons button[type="button"]:hover {
+    background-color: #e41e1e;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Footer */
+footer {
+    background-color: #2a76d2;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+
+}
+
+
+/* Ajuste para elementos flotantes */
+.navbar ul::after, .navbar ul li::after, .header-right::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
