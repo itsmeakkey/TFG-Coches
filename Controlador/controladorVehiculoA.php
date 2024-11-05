@@ -5,54 +5,64 @@ header('Content-Type: application/json');
 require_once '../Modelo/VehiculoBD.php';
 require_once '../Modelo/ReservaBD.php';
 
-// Asegúrate de que estás recibiendo la solicitud POST
+// Obtener el precio de un vehículo específico
+if (isset($_GET['accion']) && $_GET['accion'] == 'obtenerPrecio' && isset($_GET['vehiculo_id'])) {
+    $vehiculoId = $_GET['vehiculo_id'];
+    $precioDia = VehiculoBD::obtenerPrecioVehiculo($vehiculoId);
 
-    // Comprueba si se ha enviado el campo 'buscarAlquiler'
-    if (isset($_POST['buscarAlquiler'])) {
-        // Captura las fechas
-        if (isset($_POST['fechaDesde']) && isset($_POST['fechaHasta'])) {
-            $fechaDesde = $_POST['fechaDesde'];
-            $fechaHasta = $_POST['fechaHasta'];
+    if ($precioDia !== null) {
+        echo json_encode(['success' => true, 'precioDia' => $precioDia]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Precio no encontrado']);
+    }
+    exit;
+}
 
-            // Obtén los vehículos disponibles
-            $vehiculos = VehiculoBD::listarVehiculosDisponibles($fechaDesde, $fechaHasta);
+// Comprueba si se ha enviado el campo 'buscarAlquiler'
+if (isset($_POST['buscarAlquiler'])) {
+    // Captura las fechas
+    if (isset($_POST['fechaDesde']) && isset($_POST['fechaHasta'])) {
+        $fechaDesde = $_POST['fechaDesde'];
+        $fechaHasta = $_POST['fechaHasta'];
 
-            if (!empty($vehiculos)) {
-                ob_start(); // Inicia la captura del output
-                echo '<h3>VEHÍCULOS DISPONIBLES PARA TI:</h3>';
-                echo '<div class="car-grid">'; // Abre el contenedor de la cuadrícula
+        // Obtén los vehículos disponibles
+        $vehiculos = VehiculoBD::listarVehiculosDisponibles($fechaDesde, $fechaHasta);
 
-                foreach ($vehiculos as $vehiculo): ?>
-                    <div class="car-card" id="car-<?php echo $vehiculo['id']; ?>">
-                        <div class="car-info">
-                            <img src="<?php echo $vehiculo['imagen']; ?>"
-                                 alt="Coche <?php echo $vehiculo['marca'] . ' ' . $vehiculo['modelo']; ?>" class="car-image">
-                            <h3><?php echo $vehiculo['marca'] . ' ' . $vehiculo['modelo']; ?></h3>
-                            <p><b>Precio por día:</b> €<?php echo $vehiculo['precioDia']; ?></p>
-                            <p><b>Plazas: </b><?php echo $vehiculo['plazas']; ?></p>
-                            <p><b>Combustible: </b> <?php echo $vehiculo['combustible']; ?></p>
+        if (!empty($vehiculos)) {
+            ob_start(); // Inicia la captura del output
+            echo '<h3>VEHÍCULOS DISPONIBLES PARA TI:</h3>';
+            echo '<div class="car-grid">'; // Abre el contenedor de la cuadrícula
 
-                            <!-- Botón "Reservar" -->
-                            <button class="reservar-btn"
-                                    onclick="mostrarModalSeguros(<?php echo $vehiculo['id']; ?>, '<?php echo $fechaDesde; ?>', '<?php echo $fechaHasta; ?>')">
-                                Reservar
-                            </button>
-                        </div>
+            foreach ($vehiculos as $vehiculo): ?>
+                <div class="car-card" id="car-<?php echo $vehiculo['id']; ?>">
+                    <div class="car-info">
+                        <img src="<?php echo $vehiculo['imagen']; ?>"
+                             alt="Coche <?php echo $vehiculo['marca'] . ' ' . $vehiculo['modelo']; ?>" class="car-image">
+                        <h3><?php echo $vehiculo['marca'] . ' ' . $vehiculo['modelo']; ?></h3>
+                        <p><b>Precio por día:</b> €<?php echo $vehiculo['precioDia']; ?></p>
+                        <p><b>Plazas: </b><?php echo $vehiculo['plazas']; ?></p>
+                        <p><b>Combustible: </b> <?php echo $vehiculo['combustible']; ?></p>
+
+                        <!-- Botón "Reservar" -->
+                        <button class="reservar-btn"
+                                onclick="mostrarModalSeguros(<?php echo $vehiculo['id']; ?>, '<?php echo $fechaDesde; ?>', '<?php echo $fechaHasta; ?>')">
+                            Reservar
+                        </button>
                     </div>
-                <?php endforeach;
+                </div>
+            <?php endforeach;
 
-                echo '</div>'
-                ;
+            echo '</div>';
 
-                // Cierra el contenedor de la cuadrícula
-
-                $html = ob_get_clean(); // Captura el HTML generado
-                echo json_encode(['success' => true, 'html' => $html]); // Retorna como JSON
-            } else {
-                echo json_encode(['success' => false, 'error' => 'No hay vehículos disponibles']);
-            }
+            // Cierra el contenedor de la cuadrícula
+            $html = ob_get_clean(); // Captura el HTML generado
+            echo json_encode(['success' => true, 'html' => $html]); // Retorna como JSON
+        } else {
+            echo json_encode(['success' => false, 'error' => 'No hay vehículos disponibles']);
         }
     }
+}
 ?>
+
 
 

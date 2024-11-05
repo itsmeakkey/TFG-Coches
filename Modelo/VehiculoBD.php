@@ -41,6 +41,17 @@ class VehiculoBD {
         return $stmt->execute();
     }
 
+    public static function obtenerPrecioVehiculo($vehiculoId) {
+        $conexion = self::conectar();
+        $sql = "SELECT precioDia FROM vehiculos WHERE id = :vehiculoId";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':vehiculoId', $vehiculoId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado ? $resultado['precioDia'] : null;
+    }
+
 
 
     //PANEL ADMIN

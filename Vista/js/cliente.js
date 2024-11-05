@@ -292,37 +292,85 @@ function mostrarModalSeguros(vehiculoId, fechaInicio, fechaFin) {
     document.getElementById('segurosObligatorios').innerHTML = '<h4>Seguros Obligatorios:</h4>';
     document.getElementById('segurosOpcionales').innerHTML = '<h4>Seguros Opcionales:</h4>';
 
-    // Hacer la solicitud AJAX para obtener los seguros
-    fetch('../Controlador/controladorSeguro.php?accion=listar')
+    // Variables para almacenar el precio del vehículo y los seguros
+    let precioDia = 0;
+    let totalSeguros = 0;
+
+    // Promesas para obtener el precio del vehículo y los seguros
+    const obtenerPrecioVehiculo = fetch(`../Controlador/controladorVehiculoA.php?accion=obtenerPrecio&vehiculo_id=${vehiculoId}`)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Asegúrate de tener 'segurosObligatorios' y 'segurosOpcionales' en el HTML
+                precioDia = parseFloat(data.precioDia);
+            } else {
+                throw new Error('Error al obtener el precio del vehículo.');
+            }
+        });
+
+    const obtenerSeguros = fetch('../Controlador/controladorSeguro.php?accion=listar')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
                 const segurosObligatoriosDiv = document.getElementById('segurosObligatorios');
                 const segurosOpcionalesDiv = document.getElementById('segurosOpcionales');
 
                 data.seguros.forEach(seguro => {
                     const label = document.createElement('label');
                     label.innerHTML = `
-                        <input type="checkbox" name="seguros" value="${seguro.id}" ${seguro.tipo === 'obligatorio' ? 'checked disabled' : ''}>
+                        <input type="checkbox" name="seguros" value="${seguro.id}" data-precio="${seguro.precio}" ${seguro.tipo === 'obligatorio' ? 'checked disabled' : ''} onchange="calcularMontoTotal(${precioDia}, '${fechaInicio}', '${fechaFin}')">
                         ${seguro.cobertura} (€${seguro.precio})<br>
                     `;
 
                     if (seguro.tipo === 'obligatorio') {
+                        totalSeguros += parseFloat(seguro.precio);
                         segurosObligatoriosDiv.appendChild(label);
                     } else {
                         segurosOpcionalesDiv.appendChild(label);
                     }
                 });
             } else {
-                alert('No se encontraron seguros.');
+                throw new Error('No se encontraron seguros.');
             }
-        })
-        .catch(error => console.error('Error al cargar los seguros:', error));
+        });
 
-    // Mostrar el modal
-    document.getElementById('modalSeguros').style.display = 'block';
+    // Ejecutar ambas solicitudes en paralelo y mostrar el modal después de completarlas
+    Promise.all([obtenerPrecioVehiculo, obtenerSeguros])
+        .then(() => {
+            // Calcular el monto total inicial
+            calcularMontoTotal(precioDia, fechaInicio, fechaFin, totalSeguros);
+
+            // Mostrar el modal solo después de cargar los seguros y el precio
+            document.getElementById('modalSeguros').style.display = 'block';
+        })
+        .catch(error => console.error(error.message));
 }
+
+// Función para calcular el monto total del alquiler
+function calcularMontoTotal(precioDia, fechaInicio, fechaFin, totalSeguros) {
+    // Calcular los días de alquiler excluyendo la fecha final
+    const diasAlquiler = Math.floor((new Date(fechaFin) - new Date(fechaInicio)) / (1000 * 60 * 60 * 24));
+
+    if (diasAlquiler <= 0) {
+        alert("La fecha de inicio debe ser anterior a la fecha de fin.");
+        return;
+    }
+
+    // Sumar el precio de cada seguro opcional seleccionado al total de seguros
+    document.querySelectorAll('#segurosOpcionales input[type="checkbox"]:checked').forEach(checkbox => {
+        const precioSeguro = parseFloat(checkbox.getAttribute('data-precio'));
+        if (!isNaN(precioSeguro)) {
+            totalSeguros += precioSeguro;
+        }
+    });
+
+    // Calcular el monto total sumando seguros y el precio del vehículo por los días
+    let montoTotal = diasAlquiler * precioDia + totalSeguros;
+    document.getElementById('montoTotal').textContent = montoTotal.toFixed(2);
+    return montoTotal;
+}
+
+
+
 
 
 function cerrarModalSeguros() {
@@ -335,38 +383,42 @@ function confirmarReservaConSeguros() {
     const vehiculoId = document.getElementById('vehiculoId').value;
     const fechaInicio = document.getElementById('fechaInicio').value;
     const fechaFin = document.getElementById('fechaFin').value;
+    const metodoPago = document.getElementById('metodoPago').value;
+    const montoTotal = document.getElementById('montoTotal').textContent;
 
-    // Obtener los seguros seleccionados
     const seguros = Array.from(document.querySelectorAll('#formSeguros input[name="seguros"]:checked')).map(input => input.value);
 
     const formData = new FormData();
     formData.append('vehiculo_id', vehiculoId);
     formData.append('fechaInicio', fechaInicio);
     formData.append('fechaFin', fechaFin);
+    formData.append('metodoPago', metodoPago);
+    formData.append('montoTotal', montoTotal);
 
-    // Asegúrate de agregar los seguros de la forma adecuada
     seguros.forEach(seguro => {
-        formData.append('seguros[]', seguro); // Aseguramos que sea un array de seguros
+        formData.append('seguros[]', seguro);
     });
 
     fetch('../Controlador/controladorReservaA.php', {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text()) // Obtén la respuesta en crudo para depuración
+        .then(response => response.text()) // Cambiamos a .text() para ver la respuesta completa en crudo
         .then(text => {
-            console.log("Respuesta en crudo: ", text); // Ver el JSON crudo
+            console.log("Respuesta en crudo:", text); // Muestra el JSON completo en consola
+
+            // Intentamos parsear el JSON después de verlo en crudo
             try {
-                const data = JSON.parse(text); // Intenta analizar el JSON
+                const data = JSON.parse(text); // Convertimos el texto a JSON
                 if (data.success) {
-                    alert('Reserva confirmada con éxito.');
+                    alert(data.message || 'Reserva confirmada con éxito.');
                     cerrarModalSeguros();
                     document.getElementById(`car-${vehiculoId}`).remove();
                 } else {
-                    alert('Error al confirmar la reserva: ' + data.error);
+                    alert(data.error || 'Error al confirmar la reserva.');
                 }
             } catch (error) {
-                console.error("Error al analizar JSON:", error);
+                console.error("Error al analizar JSON:", error); // Muestra el error si JSON es inválido
             }
         })
         .catch(error => console.error('Error en la red:', error));

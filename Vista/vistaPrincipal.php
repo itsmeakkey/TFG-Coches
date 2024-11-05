@@ -65,6 +65,7 @@
 
 </div>
 <!-- Modal de Selección de Seguros en el alquiler de un vehículo -->
+<!-- Modal de Selección de Seguros en el alquiler de un vehículo -->
 <div id="modalSeguros" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="cerrarModalSeguros()">&times;</span>
@@ -74,19 +75,31 @@
             <input type="hidden" id="fechaInicio">
             <input type="hidden" id="fechaFin">
 
+            <!-- Seguros obligatorios y opcionales -->
             <div id="segurosObligatorios" class="seguros-section">
                 <h4>Seguros Obligatorios:</h4>
-                <!-- Seguros obligatorios se llenarán aquí con JavaScript -->
             </div>
             <div id="segurosOpcionales" class="seguros-section">
                 <h4>Seguros Opcionales:</h4>
-                <!-- Seguros opcionales se llenarán aquí con JavaScript -->
             </div>
+
+            <!-- Método de pago y monto total -->
+            <div>
+                <label for="metodoPago">Método de Pago:</label>
+                <select id="metodoPago" required>
+                    <option value="tarjeta">Tarjeta</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="transferencia">Transferencia Bancaria</option>
+                </select>
+            </div>
+            <p><b>Monto Total:</b> €<span id="montoTotal"></span></p>
 
             <button type="button" onclick="confirmarReservaConSeguros()" class="confirm-btn">Confirmar Alquiler</button>
         </form>
     </div>
 </div>
+
+
 
 
 

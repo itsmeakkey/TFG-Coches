@@ -3,9 +3,9 @@ session_start();
 require_once '../Modelo/ReservaBD.php';
 require_once '../Modelo/ReservaSeguroBD.php';
 require_once '../Modelo/VehiculoBD.php';
-//MIS RESERVAS
-// Inicializa un array para almacenar los mensajes de respuesta
-$response = [];
+require_once '../Modelo/PagoBD.php';
+
+header('Content-Type: application/json');
 
 // Verificar si la sesión de usuario está activa
 if (!isset($_SESSION['usuario_id'])) {
@@ -13,20 +13,21 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-$usuarioId = $_SESSION['usuario_id']; // Obtener el id del usuario de la sesión
+$usuarioId = $_SESSION['usuario_id'];
 
-// Añadir una reserva con la confirmación de vehiculo
+// Añadir una reserva con la confirmación de vehículo
 if (isset($_POST['vehiculo_id']) && isset($_POST['fechaInicio']) && isset($_POST['fechaFin'])) {
     $vehiculoId = $_POST['vehiculo_id'];
     $fechaInicio = $_POST['fechaInicio'];
     $fechaFin = $_POST['fechaFin'];
-    $usuarioId = $_SESSION['usuario_id']; // Tomamos el id del usuario de la sesión
+    $montoTotal = $_POST['montoTotal'];
+    $metodoPago = $_POST['metodoPago'];
 
     // Insertar la reserva en la base de datos
     $reservaInsertada = ReservaBD::insertarReserva($fechaInicio, $fechaFin, $usuarioId, $vehiculoId);
 
     if ($reservaInsertada) {
-        // Si la reserva se inserta correctamente, cambia el estado del vehículo a "Ocupado"
+        // Cambiar el estado del vehículo a "Ocupado"
         $estadoActualizado = VehiculoBD::actualizarEstadoVehiculo($vehiculoId, 'Ocupado');
 
         if ($estadoActualizado) {
@@ -35,62 +36,72 @@ if (isset($_POST['vehiculo_id']) && isset($_POST['fechaInicio']) && isset($_POST
             // Verificar si se han enviado seguros
             if (isset($_POST['seguros']) && is_array($_POST['seguros'])) {
                 $seguros = $_POST['seguros'];
-                $reservaId = ReservaBD::obtenerUltimaReservaId(); // Obtener la ID de la última reserva
+                $reservaId = ReservaBD::obtenerUltimaReservaId();
 
                 foreach ($seguros as $seguroId) {
-                    ReservaSeguroBD::insertarReservaSeguro($reservaId, $seguroId); // Insertar cada seguro asociado a la reserva
+                    ReservaSeguroBD::insertarReservaSeguro($reservaId, $seguroId);
                 }
             }
+
+            // Insertar el pago en la tabla `pagos`
+            $pagoInsertado = PagoBD::insertarPago([
+                'tipo' => 'pago único',
+                'descripcion' => 'Pago de reserva',
+                'monto_total' => $montoTotal,
+                'metodo_pago' => $metodoPago,
+                'reserva_id' => $reservaId,
+            ]);
+
+            if ($pagoInsertado) {
+                $response['success'] = true;
+                $response['message'] = 'Reserva y pago confirmados con éxito.';
+            } else {
+                $response['success'] = false;
+                $response['error'] = 'Error al procesar el pago.';
+            }
+
+            // Devuelve la respuesta y termina la ejecución del script
+            echo json_encode($response);
+            exit;
         } else {
-            $response['success'] = false;
-            $response['error'] = 'Error al actualizar el estado del vehículo';
+            echo json_encode(['success' => false, 'error' => 'Error al actualizar el estado del vehículo.']);
+            exit;
         }
     } else {
-        $response['success'] = false;
-        $response['error'] = 'Error al insertar la reserva';
+        echo json_encode(['success' => false, 'error' => 'Error al insertar la reserva.']);
+        exit;
     }
-
-    echo json_encode($response);
-    exit; // Salir después de enviar la respuesta
 }
 
-
 // Obtener las reservas del usuario
-if (isset($_GET['obtenerReservas'])) { // Usamos GET para obtener reservas
+if (isset($_GET['obtenerReservas'])) {
     $reservas = ReservaBD::obtenerReservasPorUsuario($usuarioId);
 
     if ($reservas) {
-        $response['success'] = true;
-        $response['reservas'] = $reservas;
+        echo json_encode(['success' => true, 'reservas' => $reservas]);
     } else {
-        $response['success'] = false;
-        $response['error'] = 'No se encontraron reservas.';
+        echo json_encode(['success' => false, 'error' => 'No se encontraron reservas.']);
     }
-
-    echo json_encode($response);
-    exit; // Salir después de enviar la respuesta
+    exit;
 }
 
 // Cancelar una reserva
 if (isset($_POST['cancelarReserva']) && isset($_POST['reserva_id'])) {
     $reservaId = $_POST['reserva_id'];
-    $cancelada = ReservaBD::cancelarReserva($reservaId); // Método para eliminar la reserva
+    $cancelada = ReservaBD::cancelarReserva($reservaId);
 
     if ($cancelada) {
-        $response['success'] = true;
-        $response['message'] = 'Reserva cancelada con éxito';
+        echo json_encode(['success' => true, 'message' => 'Reserva cancelada con éxito.']);
     } else {
-        $response['success'] = false;
-        $response['error'] = 'Error al cancelar la reserva';
+        echo json_encode(['success' => false, 'error' => 'Error al cancelar la reserva.']);
     }
-
-    echo json_encode($response);
-    exit; // Salir después de enviar la respuesta
+    exit;
 }
 
-// Si no se ha llegado a ninguna de las condiciones anteriores
+// Si no se ha llegado a ninguna de las condiciones anteriores, salida de error
 echo json_encode(['success' => false, 'error' => 'Acción no válida.']);
-exit; // Salir para evitar cualquier salida adicional
+exit;
 ?>
+
 
 
