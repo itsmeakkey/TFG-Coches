@@ -41,6 +41,40 @@ class VehiculoBD {
         return $stmt->execute();
     }
 
+    //SECCIÓN DE COMPARACIÓN
+    public static function obtenerDetallesVehiculo($vehiculoId) {
+        $conexion = self::conectar();
+        $stmt = $conexion->prepare("SELECT id, marca, modelo, matricula, plazas, combustible, precioDia, estado, imagen FROM vehiculos WHERE id = ?");
+        $stmt->execute([$vehiculoId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function filtrarVehiculos($marca, $modelo, $precioMin, $precioMax) {
+        $conexion = self::conectar();
+        $query = "SELECT * FROM vehiculos WHERE precioDia BETWEEN :precioMin AND :precioMax";
+
+        $params = [
+            ':precioMin' => $precioMin,
+            ':precioMax' => $precioMax,
+        ];
+
+        if (!empty($marca)) {
+            $query .= " AND marca = :marca";
+            $params[':marca'] = $marca;
+        }
+
+        if (!empty($modelo)) {
+            $query .= " AND modelo = :modelo";
+            $params[':modelo'] = $modelo;
+        }
+
+        $stmt = $conexion->prepare($query);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
     public static function obtenerPrecioVehiculo($vehiculoId) {
         $conexion = self::conectar();
         $sql = "SELECT precioDia FROM vehiculos WHERE id = :vehiculoId";

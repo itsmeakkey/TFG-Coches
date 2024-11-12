@@ -17,7 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (section === 'perfil') {
                 event.preventDefault();
                 cargarPerfil(); // Llama a la función para cargar el perfil
-            } else {
+            } else if (section === 'comparar') {
+                event.preventDefault();
+                cargarComparacion(); // Llama a la función para cargar las comparaciones
+            }else {
                 event.preventDefault();
                 // Realizar la petición AJAX para cargar otras secciones
                 fetch(`../Vista/Secciones/Cliente/${section}.php`)
@@ -30,8 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
-
 
 //Cargar reservas
 function cargarReservas() {
@@ -282,6 +283,7 @@ document.getElementById('reservaForm').addEventListener('submit', function(event
 
 //Usuario realiza reserva para una fecha
 // Función para confirmar la reserva con la selección de seguros
+// Función para confirmar la reserva con la selección de seguros
 function mostrarModalSeguros(vehiculoId, fechaInicio, fechaFin) {
     // Asignar los datos al modal
     document.getElementById('vehiculoId').value = vehiculoId;
@@ -317,7 +319,7 @@ function mostrarModalSeguros(vehiculoId, fechaInicio, fechaFin) {
                 data.seguros.forEach(seguro => {
                     const label = document.createElement('label');
                     label.innerHTML = `
-                        <input type="checkbox" name="seguros" value="${seguro.id}" data-precio="${seguro.precio}" ${seguro.tipo === 'obligatorio' ? 'checked disabled' : ''} onchange="calcularMontoTotal(${precioDia}, '${fechaInicio}', '${fechaFin}')">
+                        <input type="checkbox" name="seguros" value="${seguro.id}" data-precio="${seguro.precio}" ${seguro.tipo === 'obligatorio' ? 'checked disabled' : ''} onchange="calcularMontoTotal(${precioDia}, '${fechaInicio}', '${fechaFin}', ${totalSeguros})">
                         ${seguro.cobertura} (€${seguro.precio})<br>
                     `;
 
@@ -348,7 +350,7 @@ function mostrarModalSeguros(vehiculoId, fechaInicio, fechaFin) {
 // Función para calcular el monto total del alquiler
 function calcularMontoTotal(precioDia, fechaInicio, fechaFin, totalSeguros) {
     // Calcular los días de alquiler excluyendo la fecha final
-    const diasAlquiler = Math.floor((new Date(fechaFin) - new Date(fechaInicio)) / (1000 * 60 * 60 * 24));
+    const diasAlquiler = (new Date(fechaFin) - new Date(fechaInicio)) / (1000 * 60 * 60 * 24);
 
     if (diasAlquiler <= 0) {
         alert("La fecha de inicio debe ser anterior a la fecha de fin.");
@@ -368,7 +370,6 @@ function calcularMontoTotal(precioDia, fechaInicio, fechaFin, totalSeguros) {
     document.getElementById('montoTotal').textContent = montoTotal.toFixed(2);
     return montoTotal;
 }
-
 
 
 
@@ -422,6 +423,149 @@ function confirmarReservaConSeguros() {
             }
         })
         .catch(error => console.error('Error en la red:', error));
+}
+
+
+/* COMPARAR */
+// Función para cargar la sección de comparación
+function cargarComparacion() {
+    fetch('../Vista/Secciones/Cliente/comparar.php')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('content').innerHTML = data;
+        })
+        .then(() => {
+            // Configura el formulario de filtros y las funciones de comparación una vez cargada la sección
+            document.getElementById('filtroVehiculos').addEventListener('submit', filtrarVehiculos);
+        })
+        .catch(error => console.error('Error al cargar la sección de comparación:', error));
+}
+// Función para manejar el formulario de filtros
+function filtrarVehiculos(event) {
+    event.preventDefault();
+    console.log("Filtrando vehículos..."); // Verificar si esta línea se imprime
+
+    const formData = new FormData(document.getElementById('filtroVehiculos'));
+    formData.append('accion', 'filtrarVehiculos'); // Agrega la acción para que el controlador la reconozca
+
+
+    fetch('../Controlador/controladorVehiculoA.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text()) // Cambia a .text() para ver la respuesta en crudo
+        .then(text => {
+            console.log("Respuesta en crudo:", text); // Imprime la respuesta en crudo en la consola
+
+            // Intenta analizar el texto como JSON
+            try {
+                const data = JSON.parse(text);
+
+                if (data.success) {
+                    const resultadosDiv = document.getElementById('resultadosVehiculos');
+                    resultadosDiv.innerHTML = '';
+
+                    data.vehiculos.forEach(vehiculo => {
+                        const vehiculoDiv = document.createElement('div');
+                        vehiculoDiv.className = 'vehiculo';
+                        vehiculoDiv.id = `car-${vehiculo.id}`; // Añade el ID del contenedor
+                        vehiculoDiv.innerHTML = `
+                        <h3>${vehiculo.marca} ${vehiculo.modelo}</h3>
+                        <p>Precio por día: €${vehiculo.precioDia}</p>
+                        <button class="seleccionar-btn" onclick="seleccionarVehiculo(${vehiculo.id})">Seleccionar</button>
+                    `;
+                        resultadosDiv.appendChild(vehiculoDiv);
+                    });
+                } else {
+                    console.error('Error en la respuesta:', data.error);
+                }
+            } catch (error) {
+                console.error("Error al analizar JSON:", error);
+            }
+        })
+        .catch(error => console.error('Error al filtrar los vehículos:', error));
+}
+
+
+// Array para almacenar los vehículos seleccionados
+let vehiculosSeleccionados = [];
+
+// Función para seleccionar vehículos con retroalimentación visual
+function seleccionarVehiculo(id) {
+    const boton = document.querySelector(`#car-${id} .seleccionar-btn`);
+
+    if (vehiculosSeleccionados.includes(id)) {
+        // Deseleccionar el vehículo
+        vehiculosSeleccionados = vehiculosSeleccionados.filter(vehiculoId => vehiculoId !== id);
+        boton.textContent = "Seleccionar";
+        boton.classList.remove("seleccionado"); // Remover el estilo de selección
+    } else if (vehiculosSeleccionados.length < 2) {
+        // Seleccionar el vehículo
+        vehiculosSeleccionados.push(id);
+        boton.textContent = "Seleccionado";
+        boton.classList.add("seleccionado"); // Añadir estilo de selección
+    }
+
+    // Mostrar la retroalimentación de selección
+    actualizarEstadoSeleccion();
+
+    // Si ya hay dos vehículos seleccionados, comparar
+    if (vehiculosSeleccionados.length === 2) {
+        compararVehiculos();
+    } else {
+        document.getElementById('comparacionVehiculos').style.display = 'none';
+    }
+}
+
+// Función para actualizar el mensaje de estado de selección
+function actualizarEstadoSeleccion() {
+    const mensajeSeleccion = document.getElementById("mensajeSeleccion") || document.createElement("p");
+    mensajeSeleccion.id = "mensajeSeleccion";
+    mensajeSeleccion.textContent = `Vehículos seleccionados: ${vehiculosSeleccionados.length}/2`;
+    document.getElementById("resultadosVehiculos").appendChild(mensajeSeleccion);
+}
+
+// Función para comparar los vehículos seleccionados
+function compararVehiculos() {
+    const [id1, id2] = vehiculosSeleccionados;
+
+    fetch(`../Controlador/controladorVehiculoA.php?accion=comparar&id1=${id1}&id2=${id2}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const comparacionDiv = document.getElementById('comparacionVehiculos');
+                comparacionDiv.style.display = 'block';
+
+                comparacionDiv.innerHTML = `
+                    <table>
+                        <tr>
+                            <th>Característica</th>
+                            <th>${data.vehiculo1.marca} ${data.vehiculo1.modelo}</th>
+                            <th>${data.vehiculo2.marca} ${data.vehiculo2.modelo}</th>
+                        </tr>
+                        <tr>
+                            <td>Precio por día</td>
+                            <td>€${data.vehiculo1.precioDia}</td>
+                            <td>€${data.vehiculo2.precioDia}</td>
+                        </tr>
+                        <tr>
+                            <td>Plazas</td>
+                            <td>${data.vehiculo1.plazas}</td>
+                            <td>${data.vehiculo2.plazas}</td>
+                        </tr>
+                        <tr>
+                            <td>Combustible</td>
+                            <td>${data.vehiculo1.combustible}</td>
+                            <td>${data.vehiculo2.combustible}</td>
+                        </tr>
+                        <!-- Agregar otras características para comparar -->
+                    </table>
+                `;
+            } else {
+                console.error('Error en la comparación:', data.error);
+            }
+        })
+        .catch(error => console.error('Error al comparar los vehículos:', error));
 }
 
 

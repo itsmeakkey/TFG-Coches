@@ -30,6 +30,7 @@
         <li><a href="#" data-section="misReservas">Mis Reservas</a></li>
         <li><a href="#" data-section="seguros">Seguros</a></li>
         <li><a href="#" data-section="perfil">Perfil</a></li>
+        <li><a href="#" data-section="comparar">Comparar</a></li>
     </ul>
 </nav>
 <!-- Contenedor dinámico donde se cargarán las secciones por ajax-->
