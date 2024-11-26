@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 cargarComparacion(); // Llama a la función para cargar las comparaciones
             }else {
                 event.preventDefault();
-                // Realizar la petición AJAX para cargar otras secciones
+                // Otras secciones
                 fetch(`../Vista/Secciones/Cliente/${section}.php`)
                     .then(response => response.text())
                     .then(data => {
@@ -65,7 +65,7 @@ function cargarReservas() {
 function cargarSeguros() {
     // Hacemos fetch para obtener los seguros de todas las reservas del usuario
     fetch(`../Controlador/controladorSeguroA.php?accion=listarSegurosPorUsuario`)
-        .then(response => response.text()) // Cambiamos a .text() para ver la respuesta en crudo
+        .then(response => response.text()) //Cambiamos a .text() para ver la respuesta en crudo
         .then(text => {
             console.log("Respuesta en crudo:", text); // Ver el texto crudo del servidor
 
@@ -90,7 +90,7 @@ function cargarSeguros() {
                         // Añadir seguro al grid
                         segurosHTML += `
                             <div class="seguro-card">
-                                <h3>${seguro.tipo === 'opcional' ? 'Seguro Obligatorio' : 'Seguro Opcional'}</h3>
+                                <h3>${seguro.tipo === 'opcional' ? 'Seguro Opcional' : 'Seguro Obligatorio'}</h3>
                                 <p><b>Cobertura:</b> ${seguro.cobertura}</p>
                                 <p><b>Precio:</b> €${seguro.precio}</p>
                                 <p><b>Descripción:</b> ${seguro.descripcion}</p>
@@ -443,7 +443,7 @@ function cargarComparacion() {
 // Función para manejar el formulario de filtros
 function filtrarVehiculos(event) {
     event.preventDefault();
-    console.log("Filtrando vehículos..."); // Verificar si esta línea se imprime
+    console.log("Filtrando vehículos...");
 
     const formData = new FormData(document.getElementById('filtroVehiculos'));
     formData.append('accion', 'filtrarVehiculos'); // Agrega la acción para que el controlador la reconozca

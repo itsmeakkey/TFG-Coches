@@ -25,7 +25,7 @@ if(isset($_SESSION['error'])) {
     <input type="text" id="dni" name="dni" placeholder="DNI:"required ><br>
     <input type="text" id="correo" name="correo" placeholder="Correo electrónico:"  required><br>
     <input type="password" id="pwd" name="pwd"  placeholder="Contraseña:"required><br>
-    <input type="text" id="fechaNacimiento" name="fechaNacimiento" placeholder="Fecha nac (d/m/a):"  required><br>
+    <input type="date" id="fechaNacimiento" name="fechaNacimiento" placeholder="Fecha nacimiento:"  required><br>
     <input type="text" id="telefono" name="telefono" placeholder="Teléfono:" required><br>
     <input type="text" id="localidad" name="localidad" placeholder="Localidad:"required><br>
     <input type="text" id="provincia" name="provincia" placeholder="Provincia:" required><br>

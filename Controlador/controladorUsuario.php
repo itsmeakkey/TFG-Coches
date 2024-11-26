@@ -34,7 +34,7 @@ if (isset($_POST['registroUsuario'])){
     $dni = $_POST['dni'];
     $correo = $_POST['correo'];
     $password = Password::hash($_POST['pwd']);
-    $fechaNacimiento = DateTime::createFromFormat('d/m/Y', $_POST['fechaNacimiento'])->format('Y-m-d');
+    $fechaNacimiento = DateTime::createFromFormat('Y-m-d', $_POST['fechaNacimiento'])->format('Y-m-d');
     $telefono = $_POST['telefono'];
     $localidad = $_POST['localidad'];
     $provincia = $_POST['provincia'];
