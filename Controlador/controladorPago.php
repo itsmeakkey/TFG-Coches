@@ -5,4 +5,6 @@ if ($_GET['accion'] == 'listar') {
     $pagos = PagoBD::listar();
     echo json_encode($pagos);
 }
+
+
 ?>

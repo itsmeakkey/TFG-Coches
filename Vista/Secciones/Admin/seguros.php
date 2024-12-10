@@ -1,6 +1,6 @@
 <!-- ../Vista/Secciones/Admin/seguros.php -->
 <h2>Gestionar Seguros</h2>
-<p>Aquí puedes añadir, actualizar o eliminar seguros.</p><br>
+<p>Aquí puedes ver y gestionar los seguros</p><br>
 
 <!-- Modal para agregar nuevo seguro -->
 <button class="crear" id="nuevoSeguroButton">Nuevo seguro</button>
@@ -36,6 +36,5 @@
     </tr>
     </thead>
     <tbody id="seguros-list">
-    <!-- Aquí se cargarán los seguros -->
     </tbody>
 </table>

@@ -14,7 +14,13 @@
 
         <input type="number" id="plazas" placeholder="Plazas" required>
 
-        <input type="text" id="combustible" placeholder="Combustible" required>
+        <select id="combustible" required>
+            <option value="" disabled selected>Seleccione un tipo de combustible</option>
+            <option value="gasolina">Gasolina</option>
+            <option value="diesel">Diésel</option>
+            <option value="electrico">Eléctrico</option>
+            <option value="hibrido">Híbrido</option>
+        </select>
 
         <input type="number" id="precioDia" placeholder="Precio por Día" required>
 
@@ -46,7 +52,6 @@
     </tr>
     </thead>
     <tbody id="vehiculos-list">
-    <!-- Aquí se cargarán los vehículos -->
     </tbody>
 </table>
 

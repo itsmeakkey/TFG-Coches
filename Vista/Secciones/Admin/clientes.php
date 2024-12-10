@@ -17,7 +17,6 @@
     </tr>
     </thead>
     <tbody id="clientes-list">
-    <!-- Los datos de los clientes se cargarán aquí -->
     </tbody>
 
 </table>

@@ -6,14 +6,15 @@
 <table>
     <thead>
     <tr>
-        <th>Fecha</th>
-        <th>Monto</th>
-        <th>Tipo de Pago</th>
-        <th>Número de Cuotas</th>
+        <th>Nº Pago</th>
+        <th>Descripción</th>
+        <th>Monto total</th>
+        <th>Método pago</th>
+        <th>Nº Reserva</th>
         <th>Acciones</th>
+
     </tr>
     </thead>
     <tbody id="pagos-list">
-    <!-- Los datos de los pagos se cargarán aquí -->
     </tbody>
 </table>

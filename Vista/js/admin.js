@@ -367,19 +367,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Verificar si hay pagos
                 if (pagos.length === 0) {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5" style="text-align: center;">No hay pagos registrados.</td>`;
+                    row.innerHTML = `<td colspan="6" style="text-align: center;">No hay pagos registrados.</td>`;
                     tbody.appendChild(row);
                 } else {
                     pagos.forEach(pago => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                        <td>${pago.fecha}</td>
-                        <td>${pago.monto}</td>
-                        <td>${pago.tipo}</td>
-                        <td>${pago.num_cuotas}</td>
+                        <td>${pago.id}</td>
+                        <td><input type="text" value="${pago.descripcion}" data-campo="descripcion"></td>
+                        <td><input type="number" value="${pago.monto_total}" data-campo="monto_total"></td>
+                        <td><input type="text" value="${pago.metodo_pago}" data-campo="metodo_pago"></td>
+                        <td>${pago.reserva_id}</td>
                         <td>
-                            <button onclick="editarPago(${pago.id})">Editar</button>
-                            <button onclick="eliminarPago(${pago.id})">Eliminar</button>
+                            <button onclick="guardarCambiosPago(${pago.id}, this)">Guardar</button>
+                            <button class="eliminar" onclick="eliminarPago(${pago.id})">Eliminar</button>
                         </td>
                     `;
                         tbody.appendChild(row);
@@ -388,8 +389,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Error al cargar los pagos:', error));
     }
-
-});
+    });
 
 
 // FUERA DE DOM CONTENT LOADED PARA TENER ACCESO

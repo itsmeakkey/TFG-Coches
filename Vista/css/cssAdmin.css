@@ -201,7 +201,10 @@ button:disabled {
 #nuevoVehiculoModal input[type="text"],
 #nuevoVehiculoModal input[type="number"],
 #nuevoVehiculoModal input[type="date"],
-#nuevoVehiculoModal input[type="file"]{
+#nuevoVehiculoModal input[type="file"],
+#nuevoVehiculoModal select
+
+{
     width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
     padding: 10px; /* Espacio interno */
     margin-bottom: 15px; /* Margen inferior */

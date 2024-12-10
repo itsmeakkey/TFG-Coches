@@ -14,6 +14,5 @@
     </tr>
     </thead>
     <tbody id="reservas-list">
-    <!-- Los datos de las reservas se cargarán aquí -->
     </tbody>
 </table>

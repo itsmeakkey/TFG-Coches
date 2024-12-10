@@ -255,6 +255,16 @@ function cancelarReserva(reservaId) {
 document.getElementById('reservaForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Evita el envío del formulario por defecto
 
+    // Obtengo las fechas seleccionadas
+    const fechaDesde = document.getElementById('fechaDesde').value;
+    const fechaHasta = document.getElementById('fechaHasta').value;
+
+    // Las valido
+    if (new Date(fechaDesde) > new Date(fechaHasta)) {
+        alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+        return; // Detiene la ejecución si la validación falla
+    }
+
     const formData = new FormData(this);
 
     fetch('../Controlador/controladorVehiculoA.php', {
@@ -281,8 +291,8 @@ document.getElementById('reservaForm').addEventListener('submit', function(event
         .catch(error => console.error('Error de red:', error));
 });
 
+
 //Usuario realiza reserva para una fecha
-// Función para confirmar la reserva con la selección de seguros
 // Función para confirmar la reserva con la selección de seguros
 function mostrarModalSeguros(vehiculoId, fechaInicio, fechaFin) {
     // Asignar los datos al modal
