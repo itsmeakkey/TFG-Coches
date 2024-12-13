@@ -4,7 +4,7 @@ class ReservaSeguroBD {
 
     public static function insertarReservaSeguro($reservaId, $seguroId) {
         try {
-            $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', ''); // Ajusta los valores de la conexión
+            $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
             $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             $sql = "INSERT INTO reserva_seguro (reserva_id, seguro_id) VALUES (:reservaId, :seguroId)";
@@ -21,7 +21,7 @@ class ReservaSeguroBD {
 
 // Modelo: ReservaSeguroBD.php
     public static function obtenerSegurosPorUsuario($usuarioId) {
-        $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', ''); // Ajusta los valores de la conexión
+        $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
 
         $sql = "
         SELECT s.id, s.tipo, s.cobertura, s.precio, s.descripcion, rs.reserva_id, v.marca, v.modelo

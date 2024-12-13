@@ -5,7 +5,7 @@ class ReservaBD
     public static function listar()
     {
         try {
-            $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', '');
+            $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
             $stmt = $conexion->prepare("SELECT * FROM reservas");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
