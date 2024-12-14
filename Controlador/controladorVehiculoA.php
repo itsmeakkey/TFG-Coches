@@ -37,6 +37,26 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'filtrarVehiculos') {
     exit;
 }
 
+// Acción para obtener marcas y modelos
+if (isset($_GET['accion']) && $_GET['accion'] == 'obtenerMarcasModelos') {
+    $marcas = VehiculoBD::obtenerMarcas();
+    $modelos = VehiculoBD::obtenerModelos();
+    $combustibles = VehiculoBD::obtenerCombustibles();
+
+    if ($marcas || $modelos || $combustibles) {
+        echo json_encode([
+            'success' => true,
+            'marcas' => $marcas,
+            'modelos' => $modelos,
+            'combustibles' => $combustibles
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'No se encontraron marcas o modelos.']);
+    }
+    exit;
+}
+
+
 
 // Acción para comparar dos vehículos
 if (isset($_GET['accion']) && $_GET['accion'] == 'comparar' && isset($_GET['id1']) && isset($_GET['id2'])) {

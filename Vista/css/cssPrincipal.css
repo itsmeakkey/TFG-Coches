@@ -222,7 +222,7 @@ h2 {
     font-weight: bold; /* Negrita para etiquetas */
 }
 
-.reserva-form input[type="date"] {
+.reserva-form input[type="date"]{
     padding: 10px; /* Espaciado interno */
     margin: 0 10px; /* Espacio horizontal entre campos */
     border: 1px solid #ccc; /* Borde gris claro */
@@ -366,7 +366,7 @@ h4 {
 
 /*Menú de perfil*/
 #perfil {
-    background-color: #f4f4f9;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -567,10 +567,10 @@ h4 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
-    background-color: #fff;
+    /*background-color: #fff;*/
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
     margin-bottom: 20px;
 }
 
@@ -580,7 +580,8 @@ h4 {
 }
 
 #filtroVehiculos input,
-#filtroVehiculos button {
+#filtroVehiculos button,
+#filtroVehiculos select {
     padding: 8px;
     font-size: 16px;
     border-radius: 4px;
@@ -611,7 +612,7 @@ h4 {
     background-color: #fff;
     border-radius: 8px;
     padding: 15px;
-    width: calc(50% - 10px);
+    width: calc(46% - 10px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
@@ -663,7 +664,7 @@ h4 {
 }
 
 #comparacionVehiculos th {
-    background-color: #4CAF50;
+    background-color: #4c93af;
     color: white;
     font-weight: bold;
 }
@@ -678,6 +679,24 @@ h4 {
     margin-bottom: 15px;
     color: #333;
 }
+
+/* Botón de volver */
+.boton-volver {
+    margin-top: 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.boton-volver:hover {
+    background-color: #d32f2f;
+}
+
 
 
 

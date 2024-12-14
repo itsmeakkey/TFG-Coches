@@ -511,7 +511,8 @@ function guardarCambiosVehiculo(id, button) {
                 plazas: datos.plazas,
                 combustible: datos.combustible,
                 precioDia: datos.precioDia,
-                estado: datos.estado
+                estado: datos.estado,
+                imagen: datos.imagen
             })
         })
             .then(response => {

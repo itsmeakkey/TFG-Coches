@@ -11,10 +11,29 @@ class VehiculoBD {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function obtenerMarcas() {
+        $query = "SELECT DISTINCT marca FROM vehiculos";
+        $stmt = self::conectar()->query($query);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    public static function obtenerModelos() {
+        $query = "SELECT DISTINCT modelo FROM vehiculos";
+        $stmt = self::conectar()->query($query);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    public static function obtenerCombustibles() {
+        $query = "SELECT DISTINCT combustible FROM vehiculos";
+        $stmt = self::conectar()->query($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
     //PANEL CLIENTE
     public static function listarprincipal() {
         $conexion = self::conectar();
-        $stmt = $conexion->prepare("SELECT id, marca, modelo, matricula, plazas, combustible, precioDia, estado, imagen FROM vehiculos LIMIT 6");
+        $stmt = $conexion->prepare("SELECT id, marca, modelo, matricula, plazas, combustible, precioDia, estado, imagen FROM vehiculos LIMIT 9");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

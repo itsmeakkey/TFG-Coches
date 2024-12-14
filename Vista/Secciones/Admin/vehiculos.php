@@ -16,10 +16,10 @@
 
         <select id="combustible" required>
             <option value="" disabled selected>Seleccione un tipo de combustible</option>
-            <option value="gasolina">Gasolina</option>
-            <option value="diesel">Diésel</option>
-            <option value="electrico">Eléctrico</option>
-            <option value="hibrido">Híbrido</option>
+            <option value="Gasolina">Gasolina</option>
+            <option value="Diésel">Diésel</option>
+            <option value="Eléctrico">Eléctrico</option>
+            <option value="Híbrido">Híbrido</option>
         </select>
 
         <input type="number" id="precioDia" placeholder="Precio por Día" required>

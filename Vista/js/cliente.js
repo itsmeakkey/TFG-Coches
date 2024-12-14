@@ -437,7 +437,45 @@ function confirmarReservaConSeguros() {
 
 
 /* COMPARAR */
-// Función para cargar la sección de comparación
+// Función para cargar las opciones de marca y modelo
+function cargarMarcasYModelos() {
+    fetch('../Controlador/controladorVehiculoA.php?accion=obtenerMarcasModelos')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const marcaSelect = document.getElementById('marca');
+                const modeloSelect = document.getElementById('modelo');
+                const combustibleSelect = document.getElementById('combustible');
+                // Poblar marcas
+                data.marcas.forEach(marca => {
+                    const option = document.createElement('option');
+                    option.value = marca;
+                    option.textContent = marca;
+                    marcaSelect.appendChild(option);
+                });
+
+                // Poblar modelos
+                data.modelos.forEach(modelo => {
+                    const option = document.createElement('option');
+                    option.value = modelo;
+                    option.textContent = modelo;
+                    modeloSelect.appendChild(option);
+                });
+                // Poblar opciones con combustibles
+                data.combustibles.forEach(combustible => {
+                    const option = document.createElement('option');
+                    option.value = combustible;
+                    option.textContent = combustible;
+                    combustibleSelect.appendChild(option);
+                });
+            } else {
+                console.error('Error al obtener marcas o modelos:', data.error);
+            }
+        })
+        .catch(error => console.error('Error al cargar marcas y modelos:', error));
+}
+
+// Llamamos a la función cuando se carga la sección de comparación
 function cargarComparacion() {
     fetch('../Vista/Secciones/Cliente/comparar.php')
         .then(response => response.text())
@@ -445,7 +483,7 @@ function cargarComparacion() {
             document.getElementById('content').innerHTML = data;
         })
         .then(() => {
-            // Configura el formulario de filtros y las funciones de comparación una vez cargada la sección
+            cargarMarcasYModelos(); // Cargar dinámicamente marcas y modelos
             document.getElementById('filtroVehiculos').addEventListener('submit', filtrarVehiculos);
         })
         .catch(error => console.error('Error al cargar la sección de comparación:', error));
@@ -481,7 +519,7 @@ function filtrarVehiculos(event) {
                         vehiculoDiv.id = `car-${vehiculo.id}`; // Añade el ID del contenedor
                         vehiculoDiv.innerHTML = `
                         <h3>${vehiculo.marca} ${vehiculo.modelo}</h3>
-                        <p>Precio por día: €${vehiculo.precioDia}</p>
+                        <img class="car-image" src="${vehiculo.imagen}"/><br><br>
                         <button class="seleccionar-btn" onclick="seleccionarVehiculo(${vehiculo.id})">Seleccionar</button>
                     `;
                         resultadosDiv.appendChild(vehiculoDiv);
@@ -531,7 +569,7 @@ function seleccionarVehiculo(id) {
 function actualizarEstadoSeleccion() {
     const mensajeSeleccion = document.getElementById("mensajeSeleccion") || document.createElement("p");
     mensajeSeleccion.id = "mensajeSeleccion";
-    mensajeSeleccion.textContent = `Vehículos seleccionados: ${vehiculosSeleccionados.length}/2`;
+    //mensajeSeleccion.textContent = `Vehículos seleccionados: ${vehiculosSeleccionados.length}/2`;
     document.getElementById("resultadosVehiculos").appendChild(mensajeSeleccion);
 }
 
@@ -543,10 +581,13 @@ function compararVehiculos() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                // Ocultar los vehículos
+                document.getElementById('resultadosVehiculos').style.display = 'none';
+
+                // Mostrar la tabla de comparación
                 const comparacionDiv = document.getElementById('comparacionVehiculos');
                 comparacionDiv.style.display = 'block';
-
-                comparacionDiv.innerHTML = `
+                comparacionDiv.innerHTML = `<hr><br>
                     <table>
                         <tr>
                             <th>Característica</th>
@@ -554,22 +595,32 @@ function compararVehiculos() {
                             <th>${data.vehiculo2.marca} ${data.vehiculo2.modelo}</th>
                         </tr>
                         <tr>
-                            <td>Precio por día</td>
+                            <td><b>Precio por día</b></td>
                             <td>€${data.vehiculo1.precioDia}</td>
                             <td>€${data.vehiculo2.precioDia}</td>
                         </tr>
                         <tr>
-                            <td>Plazas</td>
+                            <td><b>Matrícula</b></td>
+                            <td>${data.vehiculo1.matricula}</td>
+                            <td>${data.vehiculo2.matricula}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Plazas</b></td>
                             <td>${data.vehiculo1.plazas}</td>
                             <td>${data.vehiculo2.plazas}</td>
                         </tr>
                         <tr>
-                            <td>Combustible</td>
+                            <td><b>Combustible</b></td>
                             <td>${data.vehiculo1.combustible}</td>
                             <td>${data.vehiculo2.combustible}</td>
                         </tr>
-                        <!-- Agregar otras características para comparar -->
+                        <tr>
+                            <td><b>Estado</b></td>
+                            <td>${data.vehiculo1.estado}</td>
+                            <td>${data.vehiculo2.estado}</td>
+                        </tr>
                     </table>
+                    <button class="boton-volver" onclick="volverASeleccionar()">↩</button>
                 `;
             } else {
                 console.error('Error en la comparación:', data.error);
@@ -578,6 +629,19 @@ function compararVehiculos() {
         .catch(error => console.error('Error al comparar los vehículos:', error));
 }
 
+// Función para volver a la vista de selección
+function volverASeleccionar() {
+    // Mostrar los vehículos y ocultar la tabla de comparación
+    document.getElementById('resultadosVehiculos').style.display = 'flex';
+    document.getElementById('comparacionVehiculos').style.display = 'none';
+
+    // Reiniciar la selección de vehículos
+    vehiculosSeleccionados = [];
+    document.querySelectorAll('.seleccionar-btn').forEach(boton => {
+        boton.textContent = "Seleccionar";
+        boton.classList.remove("seleccionado");
+    });
+}
 
 
 
