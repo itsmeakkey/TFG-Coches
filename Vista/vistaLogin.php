@@ -24,6 +24,8 @@
     </center>
 </form>
 <br>
-
+<footer>
+    <p>&copy; 2024 Rent a Car | Diseñado por David Ruiz Aranda</p>
+</footer>
 </body>
 </html>

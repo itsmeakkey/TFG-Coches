@@ -17,18 +17,22 @@ class VehiculoBD {
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 
-    public static function obtenerModelos() {
-        $query = "SELECT DISTINCT modelo FROM vehiculos";
-        $stmt = self::conectar()->query($query);
-        return $stmt->fetchAll(PDO::FETCH_COLUMN);
-    }
-
-    public static function obtenerCombustibles() {
-        $query = "SELECT DISTINCT combustible FROM vehiculos";
-        $stmt = self::conectar()->query($query);
+    public static function obtenerModelosPorMarca($marca) {
+        $query = "SELECT DISTINCT modelo FROM vehiculos WHERE marca = :marca";
+        $stmt = self::conectar()->prepare($query);
+        $stmt->bindParam(':marca', $marca, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
+
+    public static function obtenerCombustiblesPorMarca($marca) {
+        $query = "SELECT DISTINCT combustible FROM vehiculos WHERE marca = :marca";
+        $stmt = self::conectar()->prepare($query);
+        $stmt->bindParam(':marca', $marca, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+
 
     //PANEL CLIENTE
     public static function listarprincipal() {
@@ -68,10 +72,9 @@ class VehiculoBD {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function filtrarVehiculos($marca, $modelo, $precioMin, $precioMax) {
+    public static function filtrarVehiculos($marca, $modelo, $combustible, $precioMin, $precioMax) {
         $conexion = self::conectar();
         $query = "SELECT * FROM vehiculos WHERE precioDia BETWEEN :precioMin AND :precioMax";
-
         $params = [
             ':precioMin' => $precioMin,
             ':precioMax' => $precioMax,
@@ -87,11 +90,21 @@ class VehiculoBD {
             $params[':modelo'] = $modelo;
         }
 
+        if (!empty($combustible)) {
+            $query .= " AND combustible = :combustible";
+            $params[':combustible'] = $combustible;
+        }
+
+        // Log para depuración
+        error_log("Consulta SQL: $query");
+        error_log("Parámetros: " . print_r($params, true));
+
         $stmt = $conexion->prepare($query);
         $stmt->execute($params);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
 
     public static function obtenerPrecioVehiculo($vehiculoId) {

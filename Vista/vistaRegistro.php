@@ -33,9 +33,9 @@ if(isset($_SESSION['error'])) {
     <button type="submit" name="registroUsuario">Registrar</button>
     <button type="button" id="volver" onclick="location.href='../index.php'">Volver</button>
 </form>
-<br>
-
-
-<!--<script src="../js/jsRegistro.js"></script>-->
+<br/>
+<footer>
+    <p>&copy; 2024 Rent a Car | Diseñado por David Ruiz Aranda</p>
+</footer>
 </body>
 </html>

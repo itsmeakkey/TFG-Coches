@@ -366,7 +366,6 @@ h4 {
 
 /*Menú de perfil*/
 #perfil {
-    background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -683,7 +682,7 @@ h4 {
 /* Botón de volver */
 .boton-volver {
     margin-top: 20px;
-    background-color: #f44336;
+    background-color: #4c93af;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -694,7 +693,7 @@ h4 {
 }
 
 .boton-volver:hover {
-    background-color: #d32f2f;
+    background-color: #3b7388;
 }
 
 

@@ -121,7 +121,7 @@ function cargarPerfil() {
             if (data.success) {
                 const perfilHTML = `
                     <h2>MI PERFIL</h2>
-                    <div id="perfil">                    
+                    <div id="perfil" style="background-color: #f9f9f9">                    
                         <p><b>Nombre:</b> ${data.usuario.nombre}</p>
                         <p><b>Apellidos:</b> ${data.usuario.apellidos}</p>
                         <p><b>Correo:</b> ${data.usuario.correo}</p>
@@ -437,16 +437,13 @@ function confirmarReservaConSeguros() {
 
 
 /* COMPARAR */
-// Función para cargar las opciones de marca y modelo
-function cargarMarcasYModelos() {
-    fetch('../Controlador/controladorVehiculoA.php?accion=obtenerMarcasModelos')
+// Función para cargar marcas iniciales
+function cargarMarcas() {
+    fetch('../Controlador/controladorVehiculoA.php?accion=obtenerMarcas')
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 const marcaSelect = document.getElementById('marca');
-                const modeloSelect = document.getElementById('modelo');
-                const combustibleSelect = document.getElementById('combustible');
-                // Poblar marcas
                 data.marcas.forEach(marca => {
                     const option = document.createElement('option');
                     option.value = marca;
@@ -454,14 +451,39 @@ function cargarMarcasYModelos() {
                     marcaSelect.appendChild(option);
                 });
 
-                // Poblar modelos
+                // Agrega un evento para cargar modelos al cambiar la marca
+                marcaSelect.addEventListener('change', actualizarOpcionesModeloYCombustible);
+            } else {
+                console.error('Error al obtener marcas:', data.error);
+            }
+        })
+        .catch(error => console.error('Error al cargar marcas:', error));
+}
+
+// Función para cargar modelos y combustibles según la marca seleccionada
+function actualizarOpcionesModeloYCombustible() {
+    const marcaSeleccionada = document.getElementById('marca').value;
+
+    fetch(`../Controlador/controladorVehiculoA.php?accion=obtenerModelosYCombustibles&marca=${marcaSeleccionada}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const modeloSelect = document.getElementById('modelo');
+                const combustibleSelect = document.getElementById('combustible');
+
+                // Limpiar opciones previas
+                modeloSelect.innerHTML = '<option value="">Todos los modelos</option>';
+                combustibleSelect.innerHTML = '<option value="">Todos los combustibles</option>';
+
+                // Poblar nuevos modelos
                 data.modelos.forEach(modelo => {
                     const option = document.createElement('option');
                     option.value = modelo;
                     option.textContent = modelo;
                     modeloSelect.appendChild(option);
                 });
-                // Poblar opciones con combustibles
+
+                // Poblar nuevos combustibles
                 data.combustibles.forEach(combustible => {
                     const option = document.createElement('option');
                     option.value = combustible;
@@ -469,13 +491,13 @@ function cargarMarcasYModelos() {
                     combustibleSelect.appendChild(option);
                 });
             } else {
-                console.error('Error al obtener marcas o modelos:', data.error);
+                console.error('Error al obtener modelos y combustibles:', data.error);
             }
         })
-        .catch(error => console.error('Error al cargar marcas y modelos:', error));
+        .catch(error => console.error('Error al cargar modelos y combustibles:', error));
 }
 
-// Llamamos a la función cuando se carga la sección de comparación
+// Llama a cargarMarcas al cargar la sección de comparación
 function cargarComparacion() {
     fetch('../Vista/Secciones/Cliente/comparar.php')
         .then(response => response.text())
@@ -483,20 +505,19 @@ function cargarComparacion() {
             document.getElementById('content').innerHTML = data;
         })
         .then(() => {
-            cargarMarcasYModelos(); // Cargar dinámicamente marcas y modelos
+            cargarMarcas(); // Cargar dinámicamente marcas
             document.getElementById('filtroVehiculos').addEventListener('submit', filtrarVehiculos);
         })
         .catch(error => console.error('Error al cargar la sección de comparación:', error));
 }
+
 // Función para manejar el formulario de filtros
 function filtrarVehiculos(event) {
     event.preventDefault();
     console.log("Filtrando vehículos...");
 
     const formData = new FormData(document.getElementById('filtroVehiculos'));
-    formData.append('accion', 'filtrarVehiculos'); // Agrega la acción para que el controlador la reconozca
-
-
+    formData.append('accion', 'filtrarVehiculos');
     fetch('../Controlador/controladorVehiculoA.php', {
         method: 'POST',
         body: formData
@@ -519,7 +540,9 @@ function filtrarVehiculos(event) {
                         vehiculoDiv.id = `car-${vehiculo.id}`; // Añade el ID del contenedor
                         vehiculoDiv.innerHTML = `
                         <h3>${vehiculo.marca} ${vehiculo.modelo}</h3>
-                        <img class="car-image" src="${vehiculo.imagen}"/><br><br>
+                        <p>Combustible: ${vehiculo.combustible}</p>
+                        <p>Precio por día: ${vehiculo.precioDia}€</p>
+                        <img class="car-image" src="${vehiculo.imagen}" /><br><br>
                         <button class="seleccionar-btn" onclick="seleccionarVehiculo(${vehiculo.id})">Seleccionar</button>
                     `;
                         resultadosDiv.appendChild(vehiculoDiv);
@@ -533,6 +556,7 @@ function filtrarVehiculos(event) {
         })
         .catch(error => console.error('Error al filtrar los vehículos:', error));
 }
+
 
 
 // Array para almacenar los vehículos seleccionados

@@ -23,11 +23,12 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'obtenerPrecio' && isset($_GET[
 if (isset($_POST['accion']) && $_POST['accion'] == 'filtrarVehiculos') {
     $marca = $_POST['marca'] ?? null;
     $modelo = $_POST['modelo'] ?? null;
+    $combustible = $_POST['combustible'] ?? null; // Nuevo parámetro
     $precioMin = $_POST['precioMin'] ?? 0;
     $precioMax = $_POST['precioMax'] ?? PHP_INT_MAX;
 
     // Llama a la función del modelo para obtener vehículos que cumplan con los filtros
-    $vehiculos = VehiculoBD::filtrarVehiculos($marca, $modelo, $precioMin, $precioMax);
+    $vehiculos = VehiculoBD::filtrarVehiculos($marca, $modelo, $combustible, $precioMin, $precioMax);
 
     if (!empty($vehiculos)) {
         echo json_encode(['success' => true, 'vehiculos' => $vehiculos]);
@@ -37,25 +38,35 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'filtrarVehiculos') {
     exit;
 }
 
-// Acción para obtener marcas y modelos
-if (isset($_GET['accion']) && $_GET['accion'] == 'obtenerMarcasModelos') {
+// Acción para obtener solo las marcas iniciales
+if (isset($_GET['accion']) && $_GET['accion'] == 'obtenerMarcas') {
     $marcas = VehiculoBD::obtenerMarcas();
-    $modelos = VehiculoBD::obtenerModelos();
-    $combustibles = VehiculoBD::obtenerCombustibles();
 
-    if ($marcas || $modelos || $combustibles) {
-        echo json_encode([
-            'success' => true,
-            'marcas' => $marcas,
-            'modelos' => $modelos,
-            'combustibles' => $combustibles
-        ]);
+    if ($marcas) {
+        echo json_encode(['success' => true, 'marcas' => $marcas]);
     } else {
-        echo json_encode(['success' => false, 'error' => 'No se encontraron marcas o modelos.']);
+        echo json_encode(['success' => false, 'error' => 'No se encontraron marcas.']);
     }
     exit;
 }
+// Acción para obtener modelos y combustibles según la marca seleccionada
+if (isset($_GET['accion']) && $_GET['accion'] == 'obtenerModelosYCombustibles') {
+    $marca = $_GET['marca'] ?? null;
 
+    if ($marca) {
+        $modelos = VehiculoBD::obtenerModelosPorMarca($marca);
+        $combustibles = VehiculoBD::obtenerCombustiblesPorMarca($marca);
+
+        echo json_encode([
+            'success' => true,
+            'modelos' => $modelos,
+            'combustibles' => $combustibles,
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'No se especificó una marca válida.']);
+    }
+    exit;
+}
 
 
 // Acción para comparar dos vehículos

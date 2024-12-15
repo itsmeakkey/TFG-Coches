@@ -80,3 +80,13 @@ button[name="registrar"]:hover {
     text-align: center;
     font-size: larger;
 }
+
+/* Footer */
+footer {
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+
+}
