@@ -104,7 +104,7 @@ class UsuarioBD
                     if ($dominio == 'server.edu') {
                         $mensaje = "Hola, has recibido este mensaje porque has iniciado el registro en nuestra web.\r\n
         Pulsa o copia el siguiente enlace en un navegador para confirmar el registro:\r\n\r\n
-        https://server.edu/proyecto_coches/coches/Vista/verifica.php?email=" . $correo . "&token=" . $hash;
+        https://server.edu/TFG-Coches/Vista/verifica.php?email=" . $correo . "&token=" . $hash;
                         $mensaje = wordwrap($mensaje, 70);
                         $cabeceras = 'From: noreply@server.edu' . "\r\n";
                         mail($correo, "Nuevo usuario", $mensaje, $cabeceras);
