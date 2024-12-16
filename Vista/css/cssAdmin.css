@@ -332,7 +332,18 @@ button:disabled {
     color: #555;
     font-weight: bold;
 }
+/*RESERVAS*/
 
+.btn-generar-pdf{
+    width:99%;
+    background-color: #cf9514;
+    color:white;
+}
+
+.btn-generar-pdf:hover{
+    background-color: #b57700;
+
+}
 
 /* Estilo para el footer */
 footer {
