@@ -325,12 +325,12 @@ button:disabled {
 
 /*Campos de solo lectura*/
 .readonly-field {
-    display: inline-block; /* Para que tenga un espacio similar a un input */
-    background-color: #f0f0f0; /* Fondo gris claro */
-    padding: 5px; /* Espaciado interno */
-    border-radius: 4px; /* Bordes redondeados */
-    color: #555; /* Color de texto más apagado */
-    font-weight: bold; /* Texto en negrita para destacarlo */
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 5px; /
+    border-radius: 4px;
+    color: #555;
+    font-weight: bold;
 }
 
 

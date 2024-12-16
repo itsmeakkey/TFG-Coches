@@ -15,7 +15,7 @@
         <input type="number" id="plazas" placeholder="Plazas" required>
 
         <select id="combustible" required>
-            <option value="" disabled selected>Seleccione un tipo de combustible</option>
+            <option value="" disabled selected>Combustible</option>
             <option value="Gasolina">Gasolina</option>
             <option value="Diésel">Diésel</option>
             <option value="Eléctrico">Eléctrico</option>

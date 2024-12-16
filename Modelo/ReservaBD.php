@@ -6,13 +6,29 @@ class ReservaBD
     {
         try {
             $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
-            $stmt = $conexion->prepare("SELECT * FROM reservas");
+            $stmt = $conexion->prepare("
+            SELECT 
+                r.id,
+                r.fechaInicio,
+                r.fechaFin,
+                u.nombre AS nombreUsuario,
+                u.apellidos AS apellidosUsuario,
+                v.marca AS marcaVehiculo,
+                v.modelo AS modeloVehiculo
+            FROM 
+                reservas r
+            JOIN 
+                usuarios u ON r.usuario_id = u.id
+            JOIN 
+                vehiculos v ON r.vehiculo_id = v.id
+        ");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return [];
         }
     }
+
 
     public static function eliminar($id) {
         try {

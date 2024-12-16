@@ -15,15 +15,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // Verificar si la sección es "clientes" y cargar los datos
                     if (section === 'clientes') {
-                        cargarClientes(); // Función para cargar clientes
+                        cargarClientes();
                     } else if (section === 'vehiculos') {
-                        cargarVehiculos(); // Función para cargar vehículos
+                        cargarVehiculos();
                     } else if (section === 'seguros') {
-                        cargarSeguros(); // Función para cargar seguros
+                        cargarSeguros();
                     } else if (section === 'reservas') {
-                        cargarReservas(); // Función para cargar reservas
+                        cargarReservas();
                     } else if (section === 'pagos') {
-                        cargarPagos(); // Función para cargar pagos
+                        cargarPagos();
+                    } else if (section === 'reparaciones') {
+                        cargarReparaciones();
                     }
                 })
                 .catch(error => console.error('Error al cargar la sección:', error));
@@ -189,8 +191,50 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
         tbody.appendChild(row);
     }
-    //SECCIÓN SEGUROS
 
+    //SECCIÓN REPARACIONES
+    function cargarReparaciones() {
+        fetch('../Controlador/controladorReparacion.php?accion=listar')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la red');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("JSON crudo de las reparaciones:", data);
+
+                const tbody = document.getElementById('reparaciones-list');
+                tbody.innerHTML = '';
+
+                if (data.reparaciones.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="6" style="text-align: center;">No hay reparaciones registradas.</td>`;
+                    tbody.appendChild(row);
+                } else {
+                    data.reparaciones.forEach(reparacion => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td><span class="readonly-field">${reparacion.id}</span></td>
+                        <td><input type="text" value="${reparacion.marca} ${reparacion.modelo}" data-campo="vehiculo" readonly></td>
+                        <td><input type="date" value="${reparacion.fecha}" data-campo="fecha"></td>
+                        <td><input type="text" value="${reparacion.descripcion}" data-campo="descripcion"></td>
+                        <td><input type="number" value="${reparacion.costo}" step="0.01" data-campo="coste"></td>
+                        <td>
+                            <button onclick="guardarReparacion('${reparacion.id}', this)">Actualizar</button>
+                            <button class="eliminar" onclick="eliminarReparacion(${reparacion.id}, this)">Eliminar</button>
+                        </td>
+                    `;
+                        tbody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => console.error('Error al cargar las reparaciones:', error));
+    }
+
+
+
+    //SECCIÓN SEGUROS
     function cargarSeguros() {
         fetch('../Controlador/controladorSeguro.php?accion=listar')
             .then(response => {
@@ -331,10 +375,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     reservas.forEach(reserva => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
+                        <td><span class="readonly-field">${reserva.id}</span></td>
+                        <td><span class="readonly-field">${reserva.nombreUsuario} ${reserva.apellidosUsuario}</span></td>
+                        <td><span class="readonly-field">${reserva.marcaVehiculo} ${reserva.modeloVehiculo}</span></td>       
                         <td><input type="date" value="${new Date(reserva.fechaInicio).toISOString().split('T')[0]}" data-campo="fechaInicio"></td>
                         <td><input type="date" value="${new Date(reserva.fechaFin).toISOString().split('T')[0]}" data-campo="fechaFin"></td>
-                        <td><span class="readonly-field">${reserva.usuario_id}</span></td>
-                        <td><span class="readonly-field">${reserva.vehiculo_id}</span></td>
                         <td>
                             <button onclick="guardarCambiosReserva(${reserva.id}, this)">Actualizar</button>
                             <button class="eliminar" onclick="eliminarReserva(${reserva.id}, this)">Eliminar</button>
@@ -346,9 +391,6 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Error:', error));
     }
-
-
-
 
     //SECCIÓN PAGOS
     // Función para cargar los pagos
@@ -373,11 +415,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     pagos.forEach(pago => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                        <td>${pago.id}</td>
+                        <td><span class="readonly-field">${pago.id}</span></td>
                         <td><input type="text" value="${pago.descripcion}" data-campo="descripcion"></td>
                         <td><input type="number" value="${pago.monto_total}" data-campo="monto_total"></td>
                         <td><input type="text" value="${pago.metodo_pago}" data-campo="metodo_pago"></td>
-                        <td>${pago.reserva_id}</td>
+                        <td><span class="readonly-field">${pago.reserva_id}</span></td>
                         <td>
                             <button onclick="guardarCambiosPago(${pago.id}, this)">Guardar</button>
                             <button class="eliminar" onclick="eliminarPago(${pago.id})">Eliminar</button>

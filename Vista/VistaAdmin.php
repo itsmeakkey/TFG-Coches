@@ -25,6 +25,7 @@
     <ul>
         <li><a href="#" data-section="clientes">Gestionar Clientes</a></li>
         <li><a href="#" data-section="vehiculos">Gestionar Vehículos</a></li>
+        <li><a href="#" data-section="reparaciones">Gestionar Reparaciones</a></li>
         <li><a href="#" data-section="seguros">Gestionar Seguros</a></li>
         <li><a href="#" data-section="reservas">Gestionar Reservas</a></li>
         <li><a href="#" data-section="pagos">Gestionar Pagos</a></li>
