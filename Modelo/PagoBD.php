@@ -7,7 +7,6 @@ class PagoBD
     {
         return new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
     }
-
     //LÓGICAS PANEL ADMIN
     public static function listar()
     {
@@ -39,18 +38,18 @@ class PagoBD
         }
     }
 
-    public static function actualizar($id, $tipo, $descripcion, $monto_total, $metodo_pago, $reserva_id)
+    public static function actualizar($id, $descripcion, $monto_total, $metodo_pago)
     {
         try {
             $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
+
             $stmt = $conexion->prepare("UPDATE pagos 
-                                    SET tipo = ?, 
-                                        descripcion = ?, 
+                                    SET descripcion = ?, 
                                         monto_total = ?, 
-                                        metodo_pago = ?, 
-                                        reserva_id = ? 
+                                        metodo_pago = ? 
                                     WHERE id = ?");
-            $stmt->execute([$tipo, $descripcion, $monto_total, $metodo_pago, $reserva_id, $id]);
+            $stmt->execute([$descripcion, $monto_total, $metodo_pago, $id]);
+
             return ['success' => true];
         } catch (PDOException $e) {
             return ['success' => false, 'error' => $e->getMessage()];
@@ -63,10 +62,9 @@ class PagoBD
     {
         $conexion = self::conectar();
 
-        $sql = "INSERT INTO pagos (tipo, descripcion, monto_total, metodo_pago, reserva_id) VALUES (:tipo, :descripcion, :monto_total, :metodo_pago, :reserva_id)";
+        // Corregir la sintaxis de los valores
+        $sql = "INSERT INTO pagos (descripcion, monto_total, metodo_pago, reserva_id) VALUES (:descripcion, :monto_total, :metodo_pago, :reserva_id)";
         $stmt = $conexion->prepare($sql);
-
-        $stmt->bindParam(':tipo', $pagoData['tipo']);
         $stmt->bindParam(':descripcion', $pagoData['descripcion']);
         $stmt->bindParam(':monto_total', $pagoData['monto_total']);
         $stmt->bindParam(':metodo_pago', $pagoData['metodo_pago']);

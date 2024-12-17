@@ -67,13 +67,9 @@ function cargarSeguros() {
     fetch(`../Controlador/controladorSeguroA.php?accion=listarSegurosPorUsuario`)
         .then(response => response.text()) //Cambiamos a .text() para ver la respuesta en crudo
         .then(text => {
-            console.log("Respuesta en crudo:", text); // Ver el texto crudo del servidor
-
             // Ahora intenta analizar el JSON
             try {
                 const data = JSON.parse(text); // Convertimos la respuesta a JSON
-                console.log("JSON parseado:", data); // Ver el JSON parseado
-
                 const contentDiv = document.getElementById('content');
                 if (data.success) {
                     let segurosHTML = '<h2>SEGUROS ASOCIADOS A MIS RESERVAS</h2>';
@@ -522,18 +518,16 @@ function filtrarVehiculos(event) {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text()) // Cambia a .text() para ver la respuesta en crudo
+        .then(response => response.text())
         .then(text => {
-            console.log("Respuesta en crudo:", text); // Imprime la respuesta en crudo en la consola
+            console.log("Respuesta en crudo:", text);
 
-            // Intenta analizar el texto como JSON
             try {
                 const data = JSON.parse(text);
 
                 if (data.success) {
                     const resultadosDiv = document.getElementById('resultadosVehiculos');
                     resultadosDiv.innerHTML = '';
-
                     data.vehiculos.forEach(vehiculo => {
                         const vehiculoDiv = document.createElement('div');
                         vehiculoDiv.className = 'vehiculo';

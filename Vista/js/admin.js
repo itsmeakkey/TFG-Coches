@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(data => {
                     contentDiv.innerHTML = data;
 
-                    // Verificar si la sección es "clientes" y cargar los datos
                     if (section === 'clientes') {
                         cargarClientes();
                     } else if (section === 'vehiculos') {
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Event listener para mostrar el modal al hacer clic en "Nuevo vehículo"
                 document.getElementById('nuevoVehiculoButton').addEventListener('click', function () {
-                    document.getElementById('nuevoVehiculoModal').style.display = 'block'; // Muestra el modal
+                    document.getElementById('nuevaReparacionModal').style.display = 'block'; // Muestra el modal
                 });
 
                 // Confirmar la creación del nuevo vehículo
@@ -149,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 alert('Vehículo agregado con éxito');
                                 agregarFilaVehiculo(resultado.vehiculo); // Solo agregamos la nueva fila
                                 limpiarFormulario(); // Limpiar el formulario después de agregar
-                                document.getElementById('nuevoVehiculoModal').style.display = 'none'; // Cierra el modal
+                                document.getElementById('nuevaReparacionModal').style.display = 'none'; // Cierra el modal
                             } else {
                                 alert('Error al agregar el vehículo: ' + (resultado.error || 'Error desconocido'));
                             }
@@ -160,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Cancelar la creación del nuevo vehículo
                 document.getElementById('cancelarNuevoVehiculo').addEventListener('click', function () {
-                    document.getElementById('nuevoVehiculoModal').style.display = 'none'; // Cierra el modal
+                    document.getElementById('nuevaReparacionModal').style.display = 'none'; // Cierra el modal
                 });
             })
             .catch(error => console.error('Error:', error));
@@ -195,43 +194,114 @@ document.addEventListener("DOMContentLoaded", function () {
     //SECCIÓN REPARACIONES
     function cargarReparaciones() {
         fetch('../Controlador/controladorReparacion.php?accion=listar')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la red');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("JSON crudo de las reparaciones:", data);
 
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta JSON en crudo:', data); // Imprime la respuesta JSON directamente en crudo
                 const tbody = document.getElementById('reparaciones-list');
                 tbody.innerHTML = '';
 
-                if (data.reparaciones.length === 0) {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="6" style="text-align: center;">No hay reparaciones registradas.</td>`;
-                    tbody.appendChild(row);
-                } else {
+                if (data.success && data.reparaciones.length > 0) {
                     data.reparaciones.forEach(reparacion => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                        <td><span class="readonly-field">${reparacion.id}</span></td>
-                        <td><input type="text" value="${reparacion.marca} ${reparacion.modelo}" data-campo="vehiculo" readonly></td>
-                        <td><input type="date" value="${reparacion.fecha}" data-campo="fecha"></td>
-                        <td><input type="text" value="${reparacion.descripcion}" data-campo="descripcion"></td>
-                        <td><input type="number" value="${reparacion.costo}" step="0.01" data-campo="coste"></td>
-                        <td>
-                            <button onclick="guardarReparacion('${reparacion.id}', this)">Actualizar</button>
-                            <button class="eliminar" onclick="eliminarReparacion(${reparacion.id}, this)">Eliminar</button>
-                        </td>
-                    `;
-                        tbody.appendChild(row);
+                        agregarFilaReparacion(reparacion);
                     });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay reparaciones disponibles.</td></tr>';
                 }
+
+                // Event listener para abrir el modal
+                document.getElementById('nuevaReparacionButton').addEventListener('click', function () {
+                    cargarVehiculosSelect();
+                    document.getElementById('nuevaReparacionModal').style.display = 'block';
+                });
+
+                // Confirmar nueva reparación
+                document.getElementById('confirmarNuevaReparacion').addEventListener('click', function () {
+                    const vehiculoId = document.getElementById('vehiculo').value;
+                    const fechaReparacion = document.getElementById('fechaReparacion').value;
+                    const descripcion = document.getElementById('descripcionReparacion').value;
+                    const costo = document.getElementById('costoReparacion').value;
+
+                    if (!vehiculoId || !fechaReparacion || !descripcion || !costo) {
+                        alert('Por favor, complete todos los campos.');
+                        return;
+                    }
+
+                    // Crear FormData para enviar los datos
+                    const formData = new FormData();
+                    formData.append('accion', 'agregar');
+                    formData.append('vehiculo_id', vehiculoId);
+                    formData.append('fecha', fechaReparacion);
+                    formData.append('descripcion', descripcion);
+                    formData.append('costo', costo);
+
+                    fetch('../Controlador/controladorReparacion.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(resultado => {
+                            console.log ('En crudo: ', resultado);
+                            if (resultado.success) {
+                                alert('Reparación agregada con éxito.');
+                                agregarFilaReparacion(resultado.reparacion);
+                                limpiarFormularioReparacion();
+                                document.getElementById('nuevaReparacionModal').style.display = 'none';
+                            } else {
+                                alert('Error al agregar reparación: ' + (resultado.error || 'Error desconocido'));
+                            }
+                        })
+                        .catch(error => console.error('Error al agregar reparación:', error));
+                });
+
+                // Cancelar la creación de una nueva reparación
+                document.getElementById('cancelarNuevaReparacion').addEventListener('click', function () {
+                    document.getElementById('nuevaReparacionModal').style.display = 'none';
+                });
             })
             .catch(error => console.error('Error al cargar las reparaciones:', error));
     }
 
+// Función para agregar una nueva fila de reparación sin recargar la tabla
+    function agregarFilaReparacion(reparacion) {
+        const tbody = document.getElementById('reparaciones-list');
+        const row = document.createElement('tr');
+        row.innerHTML = `
+        <td><span class="readonly-field">${reparacion.marcaVehiculo} ${reparacion.modeloVehiculo}<span/></td>
+        <td><input type="date" value="${reparacion.fecha}" data-campo="fecha"></td>
+        <td><input type="text" value="${reparacion.descripcion}" data-campo="descripcion"></td>
+        <td><input type="number" value="${reparacion.costo}" data-campo="costo"></td>
+
+        <td>
+            <button onclick="actualizarReparacion(${reparacion.id}, this)">Actualizar</button>
+            <button class="eliminar" onclick="eliminarReparacion(${reparacion.id}, this)">Eliminar</button>
+        </td>
+    `;
+        tbody.appendChild(row);
+    }
+
+// Función para limpiar el formulario después de agregar una reparación
+    function limpiarFormularioReparacion() {
+        document.getElementById('formNuevaReparacion').reset();
+    }
+
+// Cargar vehículos en el select
+    function cargarVehiculosSelect() {
+        fetch('../Controlador/controladorVehiculo.php?accion=listar')
+            .then(response => response.json())
+            .then(vehiculos => {
+                const selectVehiculo = document.getElementById('vehiculo');
+                selectVehiculo.innerHTML = '<option value="" disabled selected>Seleccione un vehículo</option>'; // Default
+
+                vehiculos.forEach(vehiculo => {
+                    const option = document.createElement('option');
+                    option.value = vehiculo.id;
+                    option.textContent = `${vehiculo.marca} ${vehiculo.modelo} (${vehiculo.matricula})`;
+                    selectVehiculo.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar vehículos:', error));
+    }
 
 
     //SECCIÓN SEGUROS
@@ -421,7 +491,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td><input type="text" value="${pago.metodo_pago}" data-campo="metodo_pago"></td>
                         <td><span class="readonly-field">${pago.reserva_id}</span></td>
                         <td>
-                            <button onclick="guardarCambiosPago(${pago.id}, this)">Guardar</button>
+                            <button onclick="guardarCambiosPago(${pago.id}, this)">Actualizar</button>
                             <button class="eliminar" onclick="eliminarPago(${pago.id})">Eliminar</button>
                         </td>
                     `;
@@ -657,7 +727,72 @@ function guardarCambiosSeguro(id, button) {
     }
 }
 
+// Función para eliminar una reparación
+function eliminarReparacion(id, button) {
+    if (!id) {
+        console.error('ID no definido');
+        return;
+    }
 
+    if (confirm('¿Estás seguro de eliminar esta reparación?')) {
+        fetch('../Controlador/controladorReparacion.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                accion: 'eliminar',
+                id: id
+            })
+        })
+            .then(response => response.json())
+            .then(resultado => {
+                if (resultado.success) {
+                    alert('Reparación eliminada con éxito');
+                    const row = button.closest('tr');
+                    if (row) row.remove();
+                } else {
+                    alert('Error al eliminar reparación: ' + (resultado.error || 'Error desconocido'));
+                }
+            })
+            .catch(error => console.error('Error al eliminar reparación:', error));
+    }
+}
+
+// Función para actualizar una reparación existente
+function actualizarReparacion(id, button) {
+    const row = button.closest('tr');
+    const descripcion = row.querySelector('input[data-campo="descripcion"]').value;
+    const costo = row.querySelector('input[data-campo="costo"]').value;
+    const fecha = row.querySelector('input[data-campo="fecha"]').value;
+
+    if (confirm('¿Estás seguro de que deseas actualizar esta fila?')) {
+        fetch('../Controlador/controladorReparacion.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                accion: 'actualizar',
+                id: id,
+                descripcion: descripcion,
+                costo: costo,
+                fecha: fecha
+            })
+        })
+            .then(response => response.json())
+            .then(resultado => {
+                console.log('Resultado parseado:', resultado);
+                if (resultado.success) {
+                    alert('Reparación actualizada correctamente.');
+                    cargarReparaciones();
+                } else {
+                    alert('Error al actualizar reparación: ' + (resultado.error || 'Error desconocido'));
+                }
+            })
+            .catch(error => console.error('Error al actualizar reparación:', error));
+    }
+}
 // Función para eliminar un seguro
 function eliminarSeguro(id, button) {
     if (confirm('¿Estás seguro de que deseas eliminar este seguro?')) {
@@ -761,6 +896,81 @@ function guardarCambiosReserva(id, button) {
         })
         .catch(error => console.error('Error al actualizar la reserva:', error));
 }
+
+//PAGOS
+//Eliminar pago
+function eliminarPago(id, button) {
+    if (!id) {
+        console.error('ID no definido');
+        return;
+    }
+
+    if (confirm('¿Estás seguro de eliminar este pago?')) {
+        fetch('../Controlador/controladorPago.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                accion: 'eliminar',
+                id: id
+            })
+        })
+            .then(response => response.json())
+            .then(resultado => {
+                console.log('Resultado parseado:', resultado);
+                if (resultado.success) {
+                    alert('Pago eliminado con éxito');
+                    const row = button.closest('tr');
+                    if (row) row.remove();
+                } else {
+                    alert('Error al eliminar pago: ' + (resultado.error || 'Error desconocido'));
+                }
+            })
+            .catch(error => console.error('Error al eliminar pago:', error));
+    }
+}
+//Actualizar un pago
+function guardarCambiosPago(id, button) {
+    const row = button.closest('tr');
+    const descripcion = row.querySelector('input[data-campo="descripcion"]').value;
+    const monto_total = row.querySelector('input[data-campo="monto_total"]').value;
+    const metodo_pago = row.querySelector('input[data-campo="metodo_pago"]').value;
+    if (confirm('¿Estás seguro de que deseas actualizar este pago?')) {
+        fetch('../Controlador/controladorPago.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                accion: 'actualizar',
+                id: id,
+                descripcion: descripcion,
+                monto_total: monto_total,
+                metodo_pago: metodo_pago,
+            })
+        })
+            .then(response => response.text()) // Obtenemos la respuesta como texto crudo
+            .then(text => {
+                console.log('Respuesta cruda del servidor:', text); // Muestra la respuesta cruda
+                try {
+                    return JSON.parse(text); // Intentamos parsear a JSON
+                } catch (e) {
+                    console.error('Error al parsear JSON:', e);
+                    throw new Error('La respuesta del servidor no es JSON válido.');
+                }
+            })
+            .then(resultado => {
+                if (resultado.success) {
+                    alert('Pago actualizado correctamente.');
+                } else {
+                    alert('Error al actualizar pago: ' + (resultado.error || 'Error desconocido'));
+                }
+            })
+            .catch(error => console.error('Error al actualizar pago:', error));
+    }
+}
+
 
 
 

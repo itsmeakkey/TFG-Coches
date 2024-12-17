@@ -3,7 +3,7 @@
 
 <!-- Modal para agregar nuevo vehículo -->
 <button class="crear" id="nuevoVehiculoButton">Nuevo vehículo</button>
-<div id="nuevoVehiculoModal" style="display: none;">
+<div id="nuevaReparacionModal" style="display: none;">
     <h2>Agregar Nuevo Vehículo</h2>
     <form id="formNuevoVehiculo">
         <input type="text" id="marca" placeholder="Marca" required>

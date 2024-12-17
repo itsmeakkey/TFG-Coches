@@ -184,7 +184,7 @@ button:disabled {
 /*VEHICULOS*/
 /*Modal creación*/
 /* Estilos para el modal */
-#nuevoVehiculoModal {
+#nuevaReparacionModal {
     position: fixed; /* Mantener el modal fijo */
     top: 50%; /* Posicionar el modal verticalmente en el centro */
     left: 50%; /* Posicionar el modal horizontalmente en el centro */
@@ -198,11 +198,11 @@ button:disabled {
     width: 40%;
 }
 
-#nuevoVehiculoModal input[type="text"],
-#nuevoVehiculoModal input[type="number"],
-#nuevoVehiculoModal input[type="date"],
-#nuevoVehiculoModal input[type="file"],
-#nuevoVehiculoModal select
+#nuevaReparacionModal input[type="text"],
+#nuevaReparacionModal input[type="number"],
+#nuevaReparacionModal input[type="date"],
+#nuevaReparacionModal input[type="file"],
+#nuevaReparacionModal select
 
 {
     width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
@@ -224,7 +224,7 @@ button:disabled {
 }
 
 /* Estilos para los botones dentro del modal en vehículos */
-#nuevoVehiculoModal button {
+#nuevaReparacionModal button {
     background-color: #28a745; /* Color de fondo del botón */
     color: white; /* Color de texto del botón */
     border: none;
@@ -236,7 +236,7 @@ button:disabled {
     width: 48%; /* Dos botones en una fila */
 }
 
-#nuevoVehiculoModal button:hover {
+#nuevaReparacionModal button:hover {
     background-color: #218838; /* Color de fondo al pasar el mouse */
 }
 
@@ -343,6 +343,74 @@ button:disabled {
 .btn-generar-pdf:hover{
     background-color: #b57700;
 
+}
+
+/*REPARACIONES*/
+/*MODAL*/
+/* Estilos para el modal */
+#nuevaReparacionModal {
+    position: fixed; /* Mantener el modal fijo */
+    top: 50%; /* Posicionar el modal verticalmente en el centro */
+    left: 50%; /* Posicionar el modal horizontalmente en el centro */
+    transform: translate(-50%, -50%); /* Centrar el modal */
+    background-color: white; /* Fondo blanco para el modal */
+    padding: 20px; /* Espacio interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
+    display: none; /* Ocultar por defecto */
+    width: 40%;
+}
+
+#nuevaReparacionModal input[type="text"],
+#nuevaReparacionModal input[type="number"],
+#nuevaReparacionModal input[type="date"],
+#nuevaReparacionModal input[type="file"],
+#nuevaReparacionModal textarea,
+#nuevaReparacionModal select
+
+{
+    width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
+    padding: 10px; /* Espacio interno */
+    margin-bottom: 15px; /* Margen inferior */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+/* Estilo específico para el campo de subir imagen */
+{
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Estilos para los botones dentro del modal en vehículos */
+#nuevaReparacionModal button {
+    background-color: #28a745; /* Color de fondo del botón */
+    color: white; /* Color de texto del botón */
+    border: none;
+    padding: 10px 15px; /* Tamaño del botón */
+    margin: 5px; /* Margen entre botones */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 4px; /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave */
+    width: 48%; /* Dos botones en una fila */
+}
+
+#nuevaReparacionModal button:hover {
+    background-color: #218838; /* Color de fondo al pasar el mouse */
+}
+
+.cancelarNuevaReparacion {
+    background-color: #e74c3c; /* Color de fondo para el botón de cancelar */
+}
+
+.cancelarNuevaReparacion:hover {
+    background-color: #c0392b; /* Color de fondo al pasar el mouse */
 }
 
 /* Estilo para el footer */
