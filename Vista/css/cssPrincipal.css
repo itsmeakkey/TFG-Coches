@@ -147,7 +147,7 @@ button.cancelar-btn {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%; /* Ocupa todo el ancho de la celda */
+    width: 100%;
     font-size: 14px;
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -155,12 +155,12 @@ button.cancelar-btn {
 
 button.cancelar-btn:hover {
     background-color: #ff3333;
-    transform: scale(1.05); /* Pequeño zoom al pasar el mouse */
+    transform: scale(1.05); /*zoom al pasar el mouse*/
 }
 
 button.cancelar-btn:active {
     background-color: #cc0000;
-    transform: scale(0.95); /* Efecto de presión al hacer clic */
+    transform: scale(0.95); /*presión al hacer clic*/
 }
 
 table {
@@ -183,104 +183,95 @@ table tr:hover {
     background-color: #f9f9f9;
 }
 
-
-
-
-
-
 /* Contenido principal */
 .main-content {
     padding: 20px;
   /*  background-color: white;*/
     margin: 15px auto;
     max-width: 800px;
-   /* border: 1px solid #d0d7de; */
-   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Centrar texto */
 }
 
 h2 {
     text-align: center;
-    font-size: 36px; /* Tamaño grande para el encabezado */
-    margin-bottom: 20px; /* Espacio debajo del encabezado */
+    font-size: 36px;
+    margin-bottom: 20px;
 }
 
 /* Estilos para el formulario de reserva */
 .reserva-form {
-    display: flex; /* Disposición en línea */
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 15px; /* Espaciado interno */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para el contenedor */
-    margin-bottom: 20px; /* Espacio debajo del formulario */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .reserva-form label {
-    margin: 0 10px; /* Espacio horizontal alrededor de las etiquetas */
-    font-weight: bold; /* Negrita para etiquetas */
+    margin: 0 10px;
+    font-weight: bold;
 }
 
 .reserva-form input[type="date"]{
-    padding: 10px; /* Espaciado interno */
-    margin: 0 10px; /* Espacio horizontal entre campos */
-    border: 1px solid #ccc; /* Borde gris claro */
-    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .reserva-form button {
-    background-color: #2a76d2; /* Color del botón */
-    color: white; /* Color del texto del botón */
+    background-color: #2a76d2;
+    color: white;
     border: none;
-    padding: 10px 20px; /* Tamaño del botón */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar el ratón */
-    transition: background-color 0.3s; /* Transición para el hover */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .reserva-form button:hover {
-    background-color: #1d5ca8; /* Color más oscuro al pasar el ratón */
+    background-color: #1d5ca8;
 }
 
 /* Grid de búsqueda de reservas */
 .reservar-btn {
-    background-color: #28a745; /* Color de fondo del botón */
-    color: white; /* Color de texto del botón */
+    background-color: #28a745;
+    color: white;
     border: none;
     padding: 8px 12px;
     margin: 5px;
     cursor: pointer;
-    border-radius: 4px; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Transición suave */
+    border-radius: 4px;
+    transition: background-color 0.3s;
     width: 100%;
 }
 .reservar-btn:hover{
     background-color: #218838;
 }
-/*Diseño de tarjetas para Nuestros coches*/
 .car-grid {
     font-family: Arial;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Tres columnas */
-    gap: 20px; /* Espacio entre los coches */
-    margin-top: 20px; /* Espacio encima del grid */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
 }
 
 .car-card {
-    background-color: white; /* Fondo blanco para las tarjetas */
-    border-radius: 5px; /* Bordes redondeados */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    padding: 15px; /* Espaciado interno */
-    text-align: center; /* Centrar texto */
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
 }
 
 .car-image {
-    width: 100%; /* Asegura que ocupe todo el ancho del contenedor */
-    height: 120px; /* Altura fija para todas las imágenes */
+    width: 100%;
+    height: 120px;
     width: 200px;
-    object-fit: cover; /* Recorta la imagen si es más grande, manteniendo el aspecto */
-    border-radius: 5px; /* Bordes redondeados */
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 /*Estilo modal seguros*/
@@ -360,7 +351,7 @@ h2 {
 }
 
 h4 {
-    grid-column: span 2; /* Hace que el encabezado ocupe las dos columnas */
+    grid-column: span 2; /*el encabezado ocupa las dos columnas */
     margin-top: 40px;
 }
 

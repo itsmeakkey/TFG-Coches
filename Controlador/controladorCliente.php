@@ -1,22 +1,22 @@
 <?php
-/*Importamos lo necesario*/
+/*Importaciones*/
 require_once "../Modelo/BaseDeDatosConexion.php";
 require_once "../Modelo/Password.php";
 require_once "../Modelo/UsuarioBD.php";
 
-// Métodos para panel de admin
-    // Lista los usuarios en la tabla al entrar en la sección
+//ADMIN
+//Crear es una acción que depende del usuario
+
+//Listar
 if (isset($_GET['accion']) && $_GET['accion'] == 'listar') {
     $clientes = UsuarioBD::listar();
     echo json_encode($clientes);
-
-    // Elimina un usuario
+//Eliminar
 } elseif (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
     $id = $_POST['id'];
     $resultado = UsuarioBD::eliminar($id);
     echo json_encode($resultado);
-
-    // Confirma cambios en un usuario
+//Actualizar
 } elseif (isset($_POST['accion']) && $_POST['accion'] == 'actualizar') {
     $id = $_POST['id'];
     $dni = $_POST['dni'];
@@ -29,11 +29,9 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'listar') {
     $provincia = $_POST['provincia'];
     $cp = $_POST['cp'];
 
-    // Llama a la función de actualización en UsuarioBD
     $resultado = UsuarioBD::actualizar($id, $dni, $apellidos, $nombre, $fechaNacimiento, $telefono, $correo, $localidad, $provincia, $cp);
     echo json_encode($resultado);
 } else {
-    // Respuesta por si la acción no es válida
     echo json_encode(['success' => false, 'error' => 'Acción no válida']);
 }
 

@@ -1,8 +1,5 @@
-<!-- ../Vista/Secciones/Admin/pagos.php -->
 <h2>Gestionar Pagos</h2>
 <p>Aquí puedes ver y gestionar los pagos.</p><br>
-
-<!-- Tabla para listar los pagos -->
 <table>
     <thead>
     <tr>

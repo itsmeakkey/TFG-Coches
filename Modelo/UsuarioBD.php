@@ -176,7 +176,6 @@ class UsuarioBD
 
 
     //LÓGICAS PANEL DE ADMINISTRADOR
-
     //Llamada a los datos de la tabla
     public static function listar()
     {

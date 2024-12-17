@@ -1,14 +1,17 @@
 <?php
 session_start();
-require_once '../Modelo/UsuarioBD.php'; // Incluimos el modelo para manejar la base de datos
+/*Importaciones*/
+require_once '../Modelo/UsuarioBD.php';
 
-// Verificar si el usuario está autenticado
+//CLIENTE(USUARIO)
+
+//Verificamos si el usuario está autenticado
 if (!isset($_SESSION['usuario_id'])) {
     echo json_encode(['success' => false, 'error' => 'Usuario no autenticado']);
     exit;
 }
 
-// Obtener los datos del usuario desde la sesión
+//Obtengo el id de usuario de la sesión
 $usuarioId = $_SESSION['usuario_id'];
 
 // Manejar la petición para obtener los datos del perfil
@@ -24,7 +27,7 @@ if (isset($_GET['accion']) && $_GET['accion'] == 'obtenerPerfil') {
     exit;
 }
 
-// Manejar la actualización de los datos del perfil
+//Actualización de los datos del perfil
 if (isset($_POST['accion']) && $_POST['accion'] == 'actualizarPerfil') {
     $nombre = $_POST['nombre'];
     $apellidos = $_POST['apellidos'];
@@ -34,9 +37,8 @@ if (isset($_POST['accion']) && $_POST['accion'] == 'actualizarPerfil') {
     $provincia = $_POST['provincia'];
     $cp = $_POST['cp'];
 
-    // Actualizar los datos en la base de datos
+    //Operación de actualización en la base de datos
     $actualizado = UsuarioBD::actualizarUsuario($usuarioId, $nombre, $apellidos, $correo, $telefono, $localidad, $provincia, $cp);
-
     if ($actualizado) {
         echo json_encode(['success' => true, 'message' => 'Perfil actualizado con éxito.']);
     } else {

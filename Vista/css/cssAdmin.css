@@ -31,23 +31,23 @@ header h1 {
 }
 
 .Bienvenida {
-    margin-right: 20px; /* Añade un margen entre el texto y el botón */
+    margin-right: 20px;
 }
 
 .salir {
     cursor: pointer;
-    padding: 5px 10px; /* Tamaño más pequeño */
-    background-color: #e74c3c; /* Color rojo para resaltar */
+    padding: 5px 10px;
+    background-color: #e74c3c;
     color: white;
     border: none;
     margin-top: 10px;
     border-radius: 5px;
     transition: background-color 0.3s;
-    font-size: 14px; /* Tamaño de letra reducido */
+    font-size: 14px;
 }
 
 .salir:hover {
-    background-color: #c0392b; /* Color más oscuro al hacer hover */
+    background-color: #c0392b;
 }
 
 .navbar {
@@ -87,26 +87,26 @@ header h1 {
 .main-content h2 {
     font-size: 26px;
     font-weight: bold;
-    color: #2c3e50; /* Color más oscuro para el encabezado */
+    color: #2c3e50;
     margin-bottom: 10px;
-    text-transform: uppercase; /* Convertir el texto a mayúsculas */
-    letter-spacing: 1.2px; /* Añadir espacio entre letras */
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
 }
 
 .main-content p {
     font-size: 18px;
-    color: #7f8c8d; /* Un gris más suave para los párrafos */
-    line-height: 1.5; /* Espaciado entre líneas */
+    color: #7f8c8d;
+    line-height: 1.5;
 
 }
 /* Estilo para las tablas */
 .table-container {
-    overflow-x: auto; /* Permitir desplazamiento horizontal si es necesario */
-    margin: 20px; /* Margen alrededor del contenedor de la tabla */
-    border: 1px solid #ddd; /* Borde alrededor del contenedor de la tabla */
-    border-radius: 8px; /* Bordes redondeados del contenedor */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
-    background-color: white; /* Color de fondo del contenedor */
+    overflow-x: auto;
+    margin: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 table {
@@ -121,8 +121,8 @@ th, td {
 }
 
 th {
-    background-color: #333; /* Color de fondo de los encabezados */
-    color: white; /* Color de texto de los encabezados */
+    background-color: #333;
+    color: white;
 }
 
 tr:nth-child(even) {
@@ -130,30 +130,30 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-    background-color: #e1e1e1; /* Color de fondo al pasar el mouse sobre una fila */
+    background-color: #e1e1e1;
 }
 /*INPUTS TABLA*/
 td input[type="text"], td input[type="email"], td input[type="date"] {
-    width: 100%; /* Los inputs ocuparán todo el ancho de la celda */
-    box-sizing: border-box; /* Asegúrate de que el padding no afecte el ancho */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 
 
 button {
-    background-color: #28a745; /* Color de fondo del botón */
-    color: white; /* Color de texto del botón */
+    background-color: #28a745;
+    color: white;
     border: none;
     padding: 8px 12px;
     margin: 5px;
     cursor: pointer;
-    border-radius: 4px; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Transición suave */
+    border-radius: 4px;
+    transition: background-color 0.3s;
     width: 100%;
 }
 
 button:hover {
-    background-color: #218838; /* Color de fondo del botón al pasar el mouse */
+    background-color: #218838;
 }
 .crear{
     max-width: 99%;
@@ -162,14 +162,14 @@ button:hover {
 
 .eliminar {
     width: 100%;
-    background-color: #d71a3c; /* Color de fondo del botón */
-    color: white; /* Color de texto del botón */
+    background-color: #d71a3c;
+    color: white;
     border: none;
     padding: 8px 12px;
     margin: 5px;
     cursor: pointer;
-    border-radius: 4px; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Transición suave */
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
 .eliminar:hover {
@@ -177,24 +177,24 @@ button:hover {
 }
 
 button:disabled {
-    background-color: #ccc; /* Color de fondo del botón deshabilitado */
-    cursor: not-allowed; /* Cambiar cursor para botones deshabilitados */
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 /*VEHICULOS*/
 /*Modal creación*/
 /* Estilos para el modal */
 #nuevaReparacionModal {
-    position: fixed; /* Mantener el modal fijo */
-    top: 50%; /* Posicionar el modal verticalmente en el centro */
-    left: 50%; /* Posicionar el modal horizontalmente en el centro */
-    transform: translate(-50%, -50%); /* Centrar el modal */
-    background-color: white; /* Fondo blanco para el modal */
-    padding: 20px; /* Espacio interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
-    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
-    display: none; /* Ocultar por defecto */
+    position: fixed; /
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
     width: 40%;
 }
 
@@ -205,11 +205,11 @@ button:disabled {
 #nuevaReparacionModal select
 
 {
-    width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
-    padding: 10px; /* Espacio interno */
-    margin-bottom: 15px; /* Margen inferior */
-    border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 4px; /* Bordes redondeados */
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 /* Estilo específico para el campo de subir imagen */
@@ -223,104 +223,104 @@ button:disabled {
     font-size: 16px;
 }
 
-/* Estilos para los botones dentro del modal en vehículos */
+/*Estilo para los botones dentro del modal vehículos */
 #nuevaReparacionModal button {
-    background-color: #28a745; /* Color de fondo del botón */
-    color: white; /* Color de texto del botón */
+    background-color: #28a745;
+    color: white;
     border: none;
-    padding: 10px 15px; /* Tamaño del botón */
-    margin: 5px; /* Margen entre botones */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    border-radius: 4px; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Transición suave */
-    width: 48%; /* Dos botones en una fila */
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    width: 48%;
 }
 
 #nuevaReparacionModal button:hover {
-    background-color: #218838; /* Color de fondo al pasar el mouse */
+    background-color: #218838;
 }
 
 .cancelarNuevoVehiculo {
-    background-color: #e74c3c; /* Color de fondo para el botón de cancelar */
+    background-color: #e74c3c;
 }
 
 .cancelarNuevoVehiculo:hover {
-    background-color: #c0392b; /* Color de fondo al pasar el mouse */
+    background-color: #c0392b;
 }
 
 /* SEGUROS */
 /* Modal creación */
 /* Estilos para el modal */
 #nuevoSeguroModal {
-    position: fixed; /* Mantener el modal fijo */
-    top: 50%; /* Posicionar el modal verticalmente en el centro */
-    left: 50%; /* Posicionar el modal horizontalmente en el centro */
-    transform: translate(-50%, -50%); /* Centrar el modal */
-    background-color: white; /* Fondo blanco para el modal */
-    padding: 20px; /* Espacio interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
-    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
-    display: none; /* Ocultar por defecto */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
     width: 40%;
 }
 
 #nuevoSeguroModal input[type="text"],
 #nuevoSeguroModal input[type="number"],
 #nuevoSeguroModal select {
-    width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
-    padding: 10px; /* Espacio interno */
-    margin-bottom: 15px; /* Margen inferior */
-    border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 4px; /* Bordes redondeados */
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 14px;
 }
 
 /* Estilos para los botones dentro del modal en seguros */
 #nuevoSeguroModal button {
-    background-color: #28a745; /* Color de fondo del botón */
-    color: white; /* Color de texto del botón */
+    background-color: #28a745;
+    color: white;
     border: none;
-    padding: 10px 15px; /* Tamaño del botón */
-    margin: 5px; /* Margen entre botones */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    border-radius: 4px; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Transición suave */
-    width: 48%; /* Dos botones en una fila */
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    width: 48%;
 }
 
 #nuevoSeguroModal button:hover {
-    background-color: #218838; /* Color de fondo al pasar el mouse */
+    background-color: #218838;
 }
 
 /* Estilos para el textarea en el modal de seguros */
 #nuevoSeguroModal textarea {
-    width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
-    padding: 10px; /* Espacio interno */
-    margin-bottom: 15px; /* Margen inferior */
-    border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 4px; /* Bordes redondeados */
-    resize: vertical; /* Permitir redimensionar verticalmente */
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
     font-size: 14px;
 }
 
 /* Estilos para el textarea en la tabla de seguros */
 #seguros-list textarea {
     font-size: 14px;
-    width: 100%; /* Ocupa todo el ancho de la celda */
-    padding: 5px; /* Espacio interno */
-    border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 4px; /* Bordes redondeados */
-    resize: vertical; /* Permitir redimensionar verticalmente */
-    height: 50px; /* Altura fija para mantener la consistencia */
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    height: 50px;
 }
 
 .cancelarNuevoSeguro {
-    background-color: #e74c3c; /* Color de fondo para el botón de cancelar */
+    background-color: #e74c3c;
 }
 
 .cancelarNuevoSeguro:hover {
-    background-color: #c0392b; /* Color de fondo al pasar el mouse */
+    background-color: #c0392b;
 }
 
 /*Campos de solo lectura*/
@@ -349,16 +349,16 @@ button:disabled {
 /*MODAL*/
 /* Estilos para el modal */
 #nuevaReparacionModal {
-    position: fixed; /* Mantener el modal fijo */
-    top: 50%; /* Posicionar el modal verticalmente en el centro */
-    left: 50%; /* Posicionar el modal horizontalmente en el centro */
-    transform: translate(-50%, -50%); /* Centrar el modal */
-    background-color: white; /* Fondo blanco para el modal */
-    padding: 20px; /* Espacio interno */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
-    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
-    display: none; /* Ocultar por defecto */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
     width: 40%;
 }
 
@@ -370,11 +370,11 @@ button:disabled {
 #nuevaReparacionModal select
 
 {
-    width: calc(100% - 20px); /* Ocupa todo el ancho menos el padding */
-    padding: 10px; /* Espacio interno */
-    margin-bottom: 15px; /* Margen inferior */
-    border: 1px solid #ddd; /* Borde gris claro */
-    border-radius: 4px; /* Bordes redondeados */
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 /* Estilo específico para el campo de subir imagen */
@@ -390,27 +390,27 @@ button:disabled {
 
 /* Estilos para los botones dentro del modal en vehículos */
 #nuevaReparacionModal button {
-    background-color: #28a745; /* Color de fondo del botón */
-    color: white; /* Color de texto del botón */
+    background-color: #28a745;
+    color: white;
     border: none;
-    padding: 10px 15px; /* Tamaño del botón */
-    margin: 5px; /* Margen entre botones */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    border-radius: 4px; /* Bordes redondeados */
-    transition: background-color 0.3s; /* Transición suave */
-    width: 48%; /* Dos botones en una fila */
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    width: 48%;
 }
 
 #nuevaReparacionModal button:hover {
-    background-color: #218838; /* Color de fondo al pasar el mouse */
+    background-color: #218838;
 }
 
 .cancelarNuevaReparacion {
-    background-color: #e74c3c; /* Color de fondo para el botón de cancelar */
+    background-color: #e74c3c;
 }
 
 .cancelarNuevaReparacion:hover {
-    background-color: #c0392b; /* Color de fondo al pasar el mouse */
+    background-color: #c0392b;
 }
 
 /* Estilo para el footer */

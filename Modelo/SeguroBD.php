@@ -39,10 +39,10 @@ class SeguroBD {
             $stmt = $conexion->prepare("INSERT INTO seguros (tipo, cobertura, precio, descripcion) VALUES (?, ?, ?, ?)");
             $stmt->execute([$tipo, $cobertura, $precio, $descripcion]);
 
-            // Obtén el último ID insertado
+            //Guardo el último ID insertado
             $id = $conexion->lastInsertId();
 
-            // Devuelve los datos del nuevo seguro
+            //Devuelvo los datos del nuevo seguro
             return [
                 'success' => true,
                 'seguro' => [
@@ -59,15 +59,14 @@ class SeguroBD {
     }
 
     //LÓGICAS PARA USUARIO
+    /*No implementado
     public static function obtenerSegurosPorTipo($tipo) {
         $conexion = self::conectar();
         $stmt = $conexion->prepare("SELECT * FROM seguros WHERE tipo = :tipo");
         $stmt->bindParam(':tipo', $tipo);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-
+    }*/
 
 }
 

@@ -1,8 +1,6 @@
-<!-- ../Vista/Secciones/Admin/seguros.php -->
 <h2>Gestionar Seguros</h2>
 <p>Aquí puedes ver y gestionar los seguros</p><br>
 
-<!-- Modal para agregar nuevo seguro -->
 <button class="crear" id="nuevoSeguroButton">Nuevo seguro</button>
 <div id="nuevoSeguroModal" style="display: none;">
     <h2>Agregar Nuevo Seguro</h2>

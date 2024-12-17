@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración</title>
     <link rel="stylesheet" href="../Vista/css/cssAdmin.css">
-    <!-- Enlace al archivo JS, defer carga script de forma paralela tras renderizar -->
     <script src="../Vista/js/admin.js" defer></script>
 </head>
 <body>

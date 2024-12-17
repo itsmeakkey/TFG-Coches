@@ -1,14 +1,12 @@
 <?php
-/*Importamos lo necesario*/
+/*Importaciones*/
 require_once "../Modelo/BaseDeDatosConexion.php";
 require_once "../Modelo/Password.php";
 require_once "../Modelo/UsuarioBD.php";
 
-
-
 session_start();
 
-/*Hacemos la conexion a la base de datos*/
+/*Conexion a la base de datos*/
 $conexion = BaseDeDatosConexion::getConexion('coches');
 
 //LÓGICAS INDEX
@@ -56,8 +54,6 @@ if (isset($_POST['salir'])) {
     header('Location: ../index.php');
     exit();
 }
-
-
 ?>
 
 

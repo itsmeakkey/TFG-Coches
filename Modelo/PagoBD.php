@@ -61,8 +61,6 @@ class PagoBD
     public static function insertarPago($pagoData)
     {
         $conexion = self::conectar();
-
-        // Corregir la sintaxis de los valores
         $sql = "INSERT INTO pagos (descripcion, monto_total, metodo_pago, reserva_id) VALUES (:descripcion, :monto_total, :metodo_pago, :reserva_id)";
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':descripcion', $pagoData['descripcion']);

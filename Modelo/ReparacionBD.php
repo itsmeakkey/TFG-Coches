@@ -2,6 +2,7 @@
 
 class ReparacionBD
 {
+    //LÓGICAS ADMIN (ÚNICAMENTE)
     private static function conectar()
     {
         return new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');

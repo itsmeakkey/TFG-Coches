@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll('.navbar ul li a'); // barra nav
+    const links = document.querySelectorAll('.navbar ul li a'); // barra navegación
     const contentDiv = document.getElementById('content'); // div
 
     links.forEach(link => {
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             const section = this.getAttribute('data-section');
 
-            // Realizar la petición AJAX para cargar la sección
+            //AJAX para cargar la sección
             fetch(`../Vista/Secciones/Admin/${section}.php`)
                 .then(response => response.text())
                 .then(data => {
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     tbody.appendChild(row);
                 });
 
-                // Event listener para mostrar el modal al hacer clic en "Nuevo vehículo"
+                // Muestra el modal al hacer clic en Nuevo vehículo
                 document.getElementById('nuevoVehiculoButton').addEventListener('click', function () {
                     document.getElementById('nuevaReparacionModal').style.display = 'block'; // Muestra el modal
                 });
@@ -121,10 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     const fechaMatriculacion = document.getElementById('fechaMatriculacion').value;
                     const estado = document.getElementById('estado').value;
 
-                    // Obtener la imagen seleccionada
+                    //Obtenemos la imagen seleccionada
                     const imagen = document.getElementById('imagen').files[0];
 
-                    // Creamos un FormData para enviar tanto los datos del vehículo como la imagen
+                    //FormData para enviar tanto los datos del vehículo como la imagen
                     const formData = new FormData();
                     formData.append('accion', 'agregar');
                     formData.append('marca', marca);
@@ -135,9 +135,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     formData.append('precioDia', precioDia);
                     formData.append('fechaMatriculacion', fechaMatriculacion);
                     formData.append('estado', estado);
-                    formData.append('imagen', imagen); // Aquí se añade la imagen al FormData
+                    formData.append('imagen', imagen);
 
-                    // Realiza la petición AJAX para agregar el nuevo vehículo con la imagen
+                    //AJAX para agregar el nuevo vehículo con la imagen
                     fetch('../Controlador/controladorVehiculo.php', {
                         method: 'POST',
                         body: formData
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
 
-                // Cancelar la creación del nuevo vehículo
+                //Cancela la creación del nuevo vehículo
                 document.getElementById('cancelarNuevoVehiculo').addEventListener('click', function () {
                     document.getElementById('nuevaReparacionModal').style.display = 'none'; // Cierra el modal
                 });
@@ -165,12 +165,12 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error:', error));
     }
 
-    // Función para limpiar el formulario después de agregar un vehículo
+    //Limpiar el formulario después de agregar un vehículo
     function limpiarFormulario() {
-        document.getElementById('formNuevoVehiculo').reset(); // Resetea todos los campos del formulario
+        document.getElementById('formNuevoVehiculo').reset(); //Resetea todos los campos del formulario
     }
 
-    // Función para agregar la nueva fila del vehículo sin recargar toda la tabla
+    //Función para agregar la nueva fila del vehículo por AJAX
     function agregarFilaVehiculo(vehiculo) {
         const tbody = document.getElementById('vehiculos-list');
         const row = document.createElement('tr');
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             .then(response => response.json())
             .then(data => {
-                console.log('Respuesta JSON en crudo:', data); // Imprime la respuesta JSON directamente en crudo
+                console.log('Respuesta JSON en crudo:', data);
                 const tbody = document.getElementById('reparaciones-list');
                 tbody.innerHTML = '';
 
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay reparaciones disponibles.</td></tr>';
                 }
 
-                // Event listener para abrir el modal
+                // listener para abrir el modal
                 document.getElementById('nuevaReparacionButton').addEventListener('click', function () {
                     cargarVehiculosSelect();
                     document.getElementById('nuevaReparacionModal').style.display = 'block';
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         return;
                     }
 
-                    // Crear FormData para enviar los datos
+                    //FormData para enviar los datos
                     const formData = new FormData();
                     formData.append('accion', 'agregar');
                     formData.append('vehiculo_id', vehiculoId);
@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         .catch(error => console.error('Error al agregar reparación:', error));
                 });
 
-                // Cancelar la creación de una nueva reparación
+                //Cancelar la creación de una nueva reparación
                 document.getElementById('cancelarNuevaReparacion').addEventListener('click', function () {
                     document.getElementById('nuevaReparacionModal').style.display = 'none';
                 });
@@ -262,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error('Error al cargar las reparaciones:', error));
     }
 
-// Función para agregar una nueva fila de reparación sin recargar la tabla
+//Agregar una nueva fila de reparación por AJAX
     function agregarFilaReparacion(reparacion) {
         const tbody = document.getElementById('reparaciones-list');
         const row = document.createElement('tr');
@@ -280,12 +280,12 @@ document.addEventListener("DOMContentLoaded", function () {
         tbody.appendChild(row);
     }
 
-// Función para limpiar el formulario después de agregar una reparación
+//limpiar el formulario después de agregar una reparación
     function limpiarFormularioReparacion() {
         document.getElementById('formNuevaReparacion').reset();
     }
 
-// Cargar vehículos en el select
+//Carga vehículos en el select
     function cargarVehiculosSelect() {
         fetch('../Controlador/controladorVehiculo.php?accion=listar')
             .then(response => response.json())
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 const seguros = data.seguros;
                 const tbody = document.getElementById('seguros-list');
-                tbody.innerHTML = ''; // Limpiar contenido anterior
+                tbody.innerHTML = ''; // Limpiar contenido
 
                 if (seguros.length === 0) {
                     const row = document.createElement('tr');
@@ -347,12 +347,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 }
 
-                // Evento para mostrar el modal de creación de un nuevo seguro
+                //mostrar el modal de creación de un nuevo seguro
                 document.getElementById('nuevoSeguroButton').addEventListener('click', () => {
                     document.getElementById('nuevoSeguroModal').style.display = 'block';
                 });
 
-                // Confirmar la creación del nuevo seguro
+                //Confirmar la creación del nuevo seguro
                 document.getElementById('confirmarNuevoSeguro').addEventListener('click', () => {
                     const tipo = document.getElementById('tipo').value;
                     const cobertura = document.getElementById('cobertura').value;
@@ -378,7 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             if (resultado.success) {
                                 alert('Seguro agregado con éxito');
                                 agregarFilaSeguro(resultado.seguro);
-                                limpiarFormularioSeguro(); // Limpiar formulario tras agregar
+                                limpiarFormularioSeguro();
                                 document.getElementById('nuevoSeguroModal').style.display = 'none';
                             } else {
                                 alert('Error al agregar el seguro: ' + (resultado.error || 'Error desconocido'));
@@ -396,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-// Función para agregar la nueva fila del seguro sin recargar toda la tabla
+//agregar la nueva fila del seguro por AJAX
     function agregarFilaSeguro(seguro) {
         const tbody = document.getElementById('seguros-list');
         const row = document.createElement('tr');
@@ -418,7 +418,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tbody.appendChild(row);
     }
 
-// Función para limpiar el formulario después de agregar un seguro
+//limpiar el formulario después de agregar un seguro
     function limpiarFormularioSeguro() {
         document.getElementById('formNuevoSeguro').reset(); // Resetea todos los campos del formulario
     }
@@ -636,7 +636,7 @@ function guardarCambiosVehiculo(id, button) {
             .then(resultado => {
                 if (resultado.success) {
                     alert('Cambios guardados con éxito');
-                    // Actualiza los inputs en el DOM con los nuevos valores
+                    //Actualiza los inputs en el con los nuevos valores
                     inputs.forEach(input => {
                         input.setAttribute('value', input.value); // Actualiza el valor del atributo
                     });
@@ -692,9 +692,7 @@ function guardarCambiosSeguro(id, button) {
     const precio = row.querySelector('input[data-campo="precio"]').value;
     const descripcion = row.querySelector('input[data-campo="descripcion"]').value;
 
-    // Confirmación antes de proceder con la actualización
     if (confirm('¿Estás seguro de que deseas guardar los cambios en este seguro?')) {
-        // Petición para actualizar el seguro
         fetch('../Controlador/controladorSeguro.php', {
             method: 'POST',
             headers: {
@@ -714,7 +712,7 @@ function guardarCambiosSeguro(id, button) {
                 if (resultado.success) {
                     alert('Seguro actualizado con éxito');
 
-                    // Actualizar la fila correspondiente en el DOM
+                    // Actualiza la fila correspondiente
                     row.querySelector('select[data-campo="tipo"]').value = tipo;
                     row.querySelector('input[data-campo="cobertura"]').value = cobertura;
                     row.querySelector('input[data-campo="precio"]').value = precio;
@@ -727,7 +725,7 @@ function guardarCambiosSeguro(id, button) {
     }
 }
 
-// Función para eliminar una reparación
+//eliminar una reparación
 function eliminarReparacion(id, button) {
     if (!id) {
         console.error('ID no definido');
@@ -759,7 +757,7 @@ function eliminarReparacion(id, button) {
     }
 }
 
-// Función para actualizar una reparación existente
+//actualizar una reparación existente
 function actualizarReparacion(id, button) {
     const row = button.closest('tr');
     const descripcion = row.querySelector('input[data-campo="descripcion"]').value;
@@ -785,7 +783,7 @@ function actualizarReparacion(id, button) {
                 console.log('Resultado parseado:', resultado);
                 if (resultado.success) {
                     alert('Reparación actualizada correctamente.');
-                    cargarReparaciones();
+                   // cargarReparaciones();
                 } else {
                     alert('Error al actualizar reparación: ' + (resultado.error || 'Error desconocido'));
                 }
@@ -793,7 +791,7 @@ function actualizarReparacion(id, button) {
             .catch(error => console.error('Error al actualizar reparación:', error));
     }
 }
-// Función para eliminar un seguro
+//eliminar un seguro
 function eliminarSeguro(id, button) {
     if (confirm('¿Estás seguro de que deseas eliminar este seguro?')) {
         fetch('../Controlador/controladorSeguro.php', {
@@ -811,7 +809,7 @@ function eliminarSeguro(id, button) {
                 if (resultado.success) {
                     alert('Seguro eliminado con éxito');
 
-                    // Eliminar la fila correspondiente del DOM
+                    // Elimina la fila
                     const row = button.closest('tr');
                     row.remove();
                 } else {
@@ -825,9 +823,7 @@ function eliminarSeguro(id, button) {
 // RESERVAS
 //Función para eliminar reserva
 function eliminarReserva(id, button) {
-    // Confirma si el usuario desea eliminar la reserva
     if (confirm('¿Estás seguro de que deseas eliminar esta reserva?')) {
-        // Realiza la petición al servidor para eliminar la reserva
         fetch('../Controlador/controladorReserva.php', {
             method: 'POST',
             headers: {
@@ -856,18 +852,17 @@ function eliminarReserva(id, button) {
 
 //Función para actualizar una reserva
 function guardarCambiosReserva(id, button) {
-    // Pide confirmación al usuario
     if (!confirm('¿Estás seguro de que deseas actualizar esta reserva?')) {
-        return; // Si el usuario cancela, salir de la función
+        return;
     }
 
-    // Obtiene los valores de los campos editables de la fila correspondiente
+    //Obtengo los valores de los campos editables
     const row = button.closest('tr');
     const fechaInicio = row.querySelector('input[data-campo="fechaInicio"]').value;
     const fechaFin = row.querySelector('input[data-campo="fechaFin"]').value;
     const estado = row.querySelector('select[data-campo="estado"]').value;
 
-    // Realiza la petición al servidor para actualizar la reserva
+    //petición al servidor para actualizar la reserva
     fetch('../Controlador/controladorReserva.php', {
         method: 'POST',
         headers: {
@@ -950,11 +945,11 @@ function guardarCambiosPago(id, button) {
                 metodo_pago: metodo_pago,
             })
         })
-            .then(response => response.text()) // Obtenemos la respuesta como texto crudo
+            .then(response => response.text())
             .then(text => {
-                console.log('Respuesta cruda del servidor:', text); // Muestra la respuesta cruda
+                console.log('Respuesta cruda del servidor:', text);
                 try {
-                    return JSON.parse(text); // Intentamos parsear a JSON
+                    return JSON.parse(text);
                 } catch (e) {
                     console.error('Error al parsear JSON:', e);
                     throw new Error('La respuesta del servidor no es JSON válido.');

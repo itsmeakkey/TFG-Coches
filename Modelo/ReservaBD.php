@@ -29,7 +29,6 @@ class ReservaBD
         }
     }
 
-
     public static function eliminar($id) {
         try {
             $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
@@ -40,7 +39,6 @@ class ReservaBD
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
-
 
     public static function actualizar($id, $fechaInicio, $fechaFin) {
         try {
@@ -86,9 +84,7 @@ class ReservaBD
         return $resultado['ultima_id'];
     }
 
-
-
-    //Obtener las reservas para la opción mis reservas de la barra de navegación
+    //Obtención de las reservas para la opción "mis reservas" de la barra de navegación
     public static function obtenerReservasPorUsuario($usuarioId) {
         $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
         $sql = "SELECT r.id, r.fechaInicio, r.fechaFin, v.marca, v.modelo
@@ -102,7 +98,7 @@ class ReservaBD
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Operación para cancelar una reserva concreta
+    //Cancelar una reserva concreta
     public static function cancelarReserva($reservaId)
     {
         try {
@@ -122,13 +118,13 @@ class ReservaBD
 
             $vehiculoId = $vehiculo['vehiculo_id'];
 
-            // Si lo encuentra, cambio el estado a Disponible
+            //Si lo encuentra, cambio el estado a Disponible
             $sqlActualizarVehiculo = "UPDATE vehiculos SET estado = 'Disponible' WHERE id = :vehiculoId";
             $stmtActualizarVehiculo = $conexion->prepare($sqlActualizarVehiculo);
             $stmtActualizarVehiculo->bindParam(':vehiculoId', $vehiculoId);
             $stmtActualizarVehiculo->execute();
 
-            // Borro la reserva
+            //Borro la reserva
             $sqlEliminarReserva = "DELETE FROM reservas WHERE id = :reservaId";
             $stmtEliminarReserva = $conexion->prepare($sqlEliminarReserva);
             $stmtEliminarReserva->bindParam(':reservaId', $reservaId);
@@ -141,12 +137,5 @@ class ReservaBD
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
-
-
-
-
-
-
-
 }
 ?>

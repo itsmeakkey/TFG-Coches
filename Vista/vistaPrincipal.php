@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Cliente</title>
     <link rel="stylesheet" href="../Vista/css/cssPrincipal.css">
-    <!-- Enlace al archivo JS si decides cargar contenido dinámico -->
     <script src="../Vista/js/cliente.js" defer></script>
 </head>
 <body>
@@ -65,7 +64,6 @@
     </div>
 
 </div>
-<!-- Modal de Selección de Seguros en el alquiler de un vehículo -->
 <!-- Modal de Selección de Seguros en el alquiler de un vehículo -->
 <div id="modalSeguros" class="modal">
     <div class="modal-content">

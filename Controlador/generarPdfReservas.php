@@ -4,7 +4,7 @@ require_once '../vendor/autoload.php';
 use setasign\Fpdi\Fpdi;
 class PDFConPie extends Fpdi
 {
-    // Función para el pie de página
+    //Función para la paginación del pie de página
     public function Footer()
     {
         $this->SetY(-15);

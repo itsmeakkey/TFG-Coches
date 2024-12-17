@@ -1,7 +1,6 @@
 <h2>Gestionar Vehículos</h2>
 <p>Aquí puedes añadir, actualizar o eliminar vehículos.</p><br>
 
-<!-- Modal para agregar nuevo vehículo -->
 <button class="crear" id="nuevoVehiculoButton">Nuevo vehículo</button>
 <div id="nuevaReparacionModal" style="display: none;">
     <h2>Agregar Nuevo Vehículo</h2>

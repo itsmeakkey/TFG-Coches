@@ -95,7 +95,7 @@ class VehiculoBD {
             $params[':combustible'] = $combustible;
         }
 
-        // Log para depuración
+        //Depuración
         error_log("Consulta SQL: $query");
         error_log("Parámetros: " . print_r($params, true));
 
@@ -104,7 +104,6 @@ class VehiculoBD {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 
 
     public static function obtenerPrecioVehiculo($vehiculoId) {
@@ -117,7 +116,6 @@ class VehiculoBD {
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado ? $resultado['precioDia'] : null;
     }
-
 
 
     //PANEL ADMIN
@@ -146,7 +144,6 @@ class VehiculoBD {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
-
 
     public static function actualizar($id, $marca, $modelo, $matricula, $plazas, $combustible, $precioDia, $estado) {
         try {

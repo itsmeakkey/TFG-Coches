@@ -1,4 +1,3 @@
-<!-- ../Vista/Secciones/Admin/clientes.php -->
 <h2>Gestionar Clientes</h2>
 <p>Aquí puedes editar o eliminar clientes.</p><br>
 <table>

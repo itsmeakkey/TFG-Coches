@@ -1,12 +1,9 @@
-<!-- ../Vista/Secciones/Admin/reparaciones.php -->
 <h2>Gestionar Reparaciones</h2>
 <p>Aquí puedes ver y gestionar las reparaciones de los vehículos</p><br>
-
 <button class="crear" id="nuevaReparacionButton">Nueva Reparación</button>
 <div id="nuevaReparacionModal" style="display: none;">
     <h2>Agregar Nueva Reparación</h2>
     <form id="formNuevaReparacion">
-        <!-- Selección de vehículo -->
         <select id="vehiculo" required>
             <option value="" disabled selected>Seleccione un vehículo</option>
         </select>

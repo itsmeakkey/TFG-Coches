@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll('.navbar ul li a'); // barra nav
+    const links = document.querySelectorAll('.navbar ul li a'); // barra navegación
     const contentDiv = document.getElementById('content'); // div
 
     links.forEach(link => {
@@ -7,19 +7,19 @@ document.addEventListener("DOMContentLoaded", function () {
             const section = this.getAttribute('data-section');
 
             if (section === 'inicio') {
-                location.reload(); // Recarga la página sin hacer la petición AJAX
+                location.reload();
             } else if (section === 'misReservas') {
                 event.preventDefault();
-                cargarReservas(); // Llama a la función para cargar reservas
+                cargarReservas();
             } else if (section === 'seguros') {
                 event.preventDefault();
-                cargarSeguros(); // Llama a la función para cargar los seguros
+                cargarSeguros();
             } else if (section === 'perfil') {
                 event.preventDefault();
-                cargarPerfil(); // Llama a la función para cargar el perfil
+                cargarPerfil();
             } else if (section === 'comparar') {
                 event.preventDefault();
-                cargarComparacion(); // Llama a la función para cargar las comparaciones
+                cargarComparacion();
             }else {
                 event.preventDefault();
                 // Otras secciones
@@ -65,11 +65,10 @@ function cargarReservas() {
 function cargarSeguros() {
     // Hacemos fetch para obtener los seguros de todas las reservas del usuario
     fetch(`../Controlador/controladorSeguroA.php?accion=listarSegurosPorUsuario`)
-        .then(response => response.text()) //Cambiamos a .text() para ver la respuesta en crudo
+        .then(response => response.text())
         .then(text => {
-            // Ahora intenta analizar el JSON
             try {
-                const data = JSON.parse(text); // Convertimos la respuesta a JSON
+                const data = JSON.parse(text);
                 const contentDiv = document.getElementById('content');
                 if (data.success) {
                     let segurosHTML = '<h2>SEGUROS ASOCIADOS A MIS RESERVAS</h2>';
@@ -83,7 +82,7 @@ function cargarSeguros() {
                             segurosHTML += '<div class="seguros-grid">';
                         }
 
-                        // Añadir seguro al grid
+                        //Añado seguro al grid
                         segurosHTML += `
                             <div class="seguro-card">
                                 <h3>${seguro.tipo === 'opcional' ? 'Seguro Opcional' : 'Seguro Obligatorio'}</h3>
@@ -92,24 +91,24 @@ function cargarSeguros() {
                                 <p><b>Descripción:</b> ${seguro.descripcion}</p>
                             </div>`;
 
-                        // Cerrar el grid de seguros si se terminó de listar para una reserva
+                        // Cierro el grid de seguros si se termina de listar para una reserva
                         if (data.segurosPorReserva.indexOf(seguro) === data.segurosPorReserva.length - 1 || data.segurosPorReserva[data.segurosPorReserva.indexOf(seguro) + 1].reserva_id !== reservaActual) {
-                            segurosHTML += '</div>'; // Cerramos el grid
+                            segurosHTML += '</div>';
                         }
                     });
 
-                    contentDiv.innerHTML = segurosHTML; // Actualiza el contenido con los seguros
+                    contentDiv.innerHTML = segurosHTML; //Actualiza el contenido con los seguros
                 } else {
                     contentDiv.innerHTML = '<p>No se encontraron seguros asociados a las reservas del usuario.</p>'; // Mensaje si no hay seguros
                 }
             } catch (error) {
-                console.error("Error al analizar JSON:", error); // Captura y muestra cualquier error de análisis
+                console.error("Error al analizar JSON:", error); //Solo para depurar
             }
         })
         .catch(error => console.error('Error al cargar los seguros:', error));
 }
 
-// Función para cargar el perfil
+//Función para cargar el perfil
 function cargarPerfil() {
     fetch('../Controlador/controladorClienteA.php?accion=obtenerPerfil')
         .then(response => response.json())
@@ -132,7 +131,6 @@ function cargarPerfil() {
                         <!-- Campo oculto para la acción -->
                         <input type="hidden" name="accion" value="actualizarPerfil">
                 
-                        <!-- Los inputs estarán alineados en dos columnas -->
                         <div class="input-group">
                         <label for="nombre">Nombre:</label>
                         <input type="text" id="nombre" name="nombre" value="${data.usuario.nombre}">
@@ -189,7 +187,6 @@ function cargarPerfil() {
 function mostrarFormularioEditar() {
     document.getElementById('perfil').style.display = 'none';
     document.getElementById('formularioEditar').style.display = 'block';
-    // Añadir la funcionalidad de enviar el formulario de edición
     document.getElementById('formEditarPerfil').addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = new FormData(this);
@@ -202,7 +199,7 @@ function mostrarFormularioEditar() {
             .then(data => {
                 if (data.success) {
                     alert('Perfil actualizado con éxito.');
-                    cargarPerfil(); // Vuelve a cargar el perfil actualizado
+                    cargarPerfil(); //carga el perfil actualizado
                 } else {
                     alert('Error al actualizar el perfil.');
                 }
@@ -215,13 +212,6 @@ function cancelarEdicion() {
     document.getElementById('perfil').style.display = 'block';
     document.getElementById('formularioEditar').style.display = 'none';
 }
-
-// Función para mostrar el formulario de editar perfil
-
-
-
-
-
 
 //Cancelar reservas
 function cancelarReserva(reservaId) {
@@ -237,7 +227,7 @@ function cancelarReserva(reservaId) {
             .then(data => {
                 if (data.success) {
                     alert("Reserva cancelada con éxito.");
-                    cargarReservas(); // Actualizar la lista de reservas
+                    cargarReservas(); //Actualiza la lista de reservas
                 } else {
                     alert("Error al cancelar la reserva.");
                 }
@@ -246,19 +236,18 @@ function cancelarReserva(reservaId) {
     }
 }
 
-
 //Maneja la carga de vehículos al establecer las fechas
 document.getElementById('reservaForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Evita el envío del formulario por defecto
 
-    // Obtengo las fechas seleccionadas
+    //Obtengo las fechas seleccionadas
     const fechaDesde = document.getElementById('fechaDesde').value;
     const fechaHasta = document.getElementById('fechaHasta').value;
 
-    // Las valido
+    //Las valido
     if (new Date(fechaDesde) > new Date(fechaHasta)) {
         alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
-        return; // Detiene la ejecución si la validación falla
+        return; //Detiene la ejecución si la validación falla
     }
 
     const formData = new FormData(this);
@@ -268,43 +257,41 @@ document.getElementById('reservaForm').addEventListener('submit', function(event
         body: formData
     })
         .then(response => {
-            // Retorna la respuesta como texto
+
             return response.text();
         })
         .then(text => {
             try {
-                const data = JSON.parse(text); // Intenta analizar el JSON
+                const data = JSON.parse(text);
 
                 if (data.success) {
-                    document.getElementById('content').innerHTML = data.html; // Reemplaza solo el HTML
+                    document.getElementById('content').innerHTML = data.html;
                 } else {
-                    console.error(data.error); // Muestra el error si ocurre
+                    console.error(data.error);
                 }
             } catch (error) {
-                console.error("Error al analizar JSON:", error); // Muestra el error de análisis
+                console.error("Error al analizar JSON:", error);
             }
         })
         .catch(error => console.error('Error de red:', error));
 });
 
 
-//Usuario realiza reserva para una fecha
 // Función para confirmar la reserva con la selección de seguros
 function mostrarModalSeguros(vehiculoId, fechaInicio, fechaFin) {
-    // Asignar los datos al modal
+    //Asigno los datos al modal
     document.getElementById('vehiculoId').value = vehiculoId;
     document.getElementById('fechaInicio').value = fechaInicio;
     document.getElementById('fechaFin').value = fechaFin;
 
-    // Limpiar el contenido previo
+    //Limpio el contenido previo
     document.getElementById('segurosObligatorios').innerHTML = '<h4>Seguros Obligatorios:</h4>';
     document.getElementById('segurosOpcionales').innerHTML = '<h4>Seguros Opcionales:</h4>';
 
-    // Variables para almacenar el precio del vehículo y los seguros
+    //Para almacenar el precio del vehículo y los seguros
     let precioDia = 0;
     let totalSeguros = 0;
 
-    // Promesas para obtener el precio del vehículo y los seguros
     const obtenerPrecioVehiculo = fetch(`../Controlador/controladorVehiculoA.php?accion=obtenerPrecio&vehiculo_id=${vehiculoId}`)
         .then(response => response.json())
         .then(data => {
@@ -341,13 +328,13 @@ function mostrarModalSeguros(vehiculoId, fechaInicio, fechaFin) {
             }
         });
 
-    // Ejecutar ambas solicitudes en paralelo y mostrar el modal después de completarlas
+    //Ejecuta ambas solicitudes en paralelo y muestra el modal después
     Promise.all([obtenerPrecioVehiculo, obtenerSeguros])
         .then(() => {
-            // Calcular el monto total inicial
+            //Calculo del monto total inicial
             calcularMontoTotal(precioDia, fechaInicio, fechaFin, totalSeguros);
 
-            // Mostrar el modal solo después de cargar los seguros y el precio
+            //Muestra el modal solo después de cargar los seguros y el precio
             document.getElementById('modalSeguros').style.display = 'block';
         })
         .catch(error => console.error(error.message));
@@ -355,7 +342,7 @@ function mostrarModalSeguros(vehiculoId, fechaInicio, fechaFin) {
 
 // Función para calcular el monto total del alquiler
 function calcularMontoTotal(precioDia, fechaInicio, fechaFin, totalSeguros) {
-    // Calcular los días de alquiler excluyendo la fecha final
+    //Calculo los días de alquiler quitando la fecha final
     const diasAlquiler = (new Date(fechaFin) - new Date(fechaInicio)) / (1000 * 60 * 60 * 24);
 
     if (diasAlquiler <= 0) {
@@ -363,7 +350,7 @@ function calcularMontoTotal(precioDia, fechaInicio, fechaFin, totalSeguros) {
         return;
     }
 
-    // Sumar el precio de cada seguro opcional seleccionado al total de seguros
+    //Sumo el precio de cada seguro opcional seleccionado al total
     document.querySelectorAll('#segurosOpcionales input[type="checkbox"]:checked').forEach(checkbox => {
         const precioSeguro = parseFloat(checkbox.getAttribute('data-precio'));
         if (!isNaN(precioSeguro)) {
@@ -371,20 +358,16 @@ function calcularMontoTotal(precioDia, fechaInicio, fechaFin, totalSeguros) {
         }
     });
 
-    // Calcular el monto total sumando seguros y el precio del vehículo por los días
+    //Calculo el monto total sumando seguros y el precio del vehículo por los días
     let montoTotal = diasAlquiler * precioDia + totalSeguros;
     document.getElementById('montoTotal').textContent = montoTotal.toFixed(2);
     return montoTotal;
 }
 
-
-
-
 function cerrarModalSeguros() {
-    // Ocultar el modal
+    //Oculta el modal
     document.getElementById('modalSeguros').style.display = 'none';
 }
-
 
 function confirmarReservaConSeguros() {
     const vehiculoId = document.getElementById('vehiculoId').value;
@@ -410,13 +393,11 @@ function confirmarReservaConSeguros() {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text()) // Cambiamos a .text() para ver la respuesta completa en crudo
+        .then(response => response.text())
         .then(text => {
-            console.log("Respuesta en crudo:", text); // Muestra el JSON completo en consola
-
-            // Intentamos parsear el JSON después de verlo en crudo
+            console.log("Respuesta en crudo:", text);
             try {
-                const data = JSON.parse(text); // Convertimos el texto a JSON
+                const data = JSON.parse(text);
                 if (data.success) {
                     alert(data.message || 'Reserva confirmada con éxito.');
                     cerrarModalSeguros();
@@ -425,12 +406,11 @@ function confirmarReservaConSeguros() {
                     alert(data.error || 'Error al confirmar la reserva.');
                 }
             } catch (error) {
-                console.error("Error al analizar JSON:", error); // Muestra el error si JSON es inválido
+                console.error("Error al analizar JSON:", error);
             }
         })
         .catch(error => console.error('Error en la red:', error));
 }
-
 
 /* COMPARAR */
 // Función para cargar marcas iniciales
@@ -447,7 +427,7 @@ function cargarMarcas() {
                     marcaSelect.appendChild(option);
                 });
 
-                // Agrega un evento para cargar modelos al cambiar la marca
+                //Evento para cargar modelos al cambiar la marca
                 marcaSelect.addEventListener('change', actualizarOpcionesModeloYCombustible);
             } else {
                 console.error('Error al obtener marcas:', data.error);
@@ -467,11 +447,10 @@ function actualizarOpcionesModeloYCombustible() {
                 const modeloSelect = document.getElementById('modelo');
                 const combustibleSelect = document.getElementById('combustible');
 
-                // Limpiar opciones previas
+                //Limpia opciones previas
                 modeloSelect.innerHTML = '<option value="">Todos los modelos</option>';
                 combustibleSelect.innerHTML = '<option value="">Todos los combustibles</option>';
 
-                // Poblar nuevos modelos
                 data.modelos.forEach(modelo => {
                     const option = document.createElement('option');
                     option.value = modelo;
@@ -479,7 +458,6 @@ function actualizarOpcionesModeloYCombustible() {
                     modeloSelect.appendChild(option);
                 });
 
-                // Poblar nuevos combustibles
                 data.combustibles.forEach(combustible => {
                     const option = document.createElement('option');
                     option.value = combustible;
@@ -493,7 +471,7 @@ function actualizarOpcionesModeloYCombustible() {
         .catch(error => console.error('Error al cargar modelos y combustibles:', error));
 }
 
-// Llama a cargarMarcas al cargar la sección de comparación
+//Llama a cargarMarcas al cargar la sección de comparación
 function cargarComparacion() {
     fetch('../Vista/Secciones/Cliente/comparar.php')
         .then(response => response.text())
@@ -501,13 +479,13 @@ function cargarComparacion() {
             document.getElementById('content').innerHTML = data;
         })
         .then(() => {
-            cargarMarcas(); // Cargar dinámicamente marcas
+            cargarMarcas();
             document.getElementById('filtroVehiculos').addEventListener('submit', filtrarVehiculos);
         })
         .catch(error => console.error('Error al cargar la sección de comparación:', error));
 }
 
-// Función para manejar el formulario de filtros
+//Manejo del formulario de filtros
 function filtrarVehiculos(event) {
     event.preventDefault();
     console.log("Filtrando vehículos...");
@@ -551,31 +529,26 @@ function filtrarVehiculos(event) {
         .catch(error => console.error('Error al filtrar los vehículos:', error));
 }
 
-
-
-// Array para almacenar los vehículos seleccionados
+//Array para almacenar los vehículos seleccionados
 let vehiculosSeleccionados = [];
 
-// Función para seleccionar vehículos con retroalimentación visual
 function seleccionarVehiculo(id) {
     const boton = document.querySelector(`#car-${id} .seleccionar-btn`);
 
     if (vehiculosSeleccionados.includes(id)) {
-        // Deseleccionar el vehículo
+        //Deseleccionar el vehículo
         vehiculosSeleccionados = vehiculosSeleccionados.filter(vehiculoId => vehiculoId !== id);
         boton.textContent = "Seleccionar";
         boton.classList.remove("seleccionado"); // Remover el estilo de selección
     } else if (vehiculosSeleccionados.length < 2) {
-        // Seleccionar el vehículo
+        //Seleccionar el vehículo
         vehiculosSeleccionados.push(id);
         boton.textContent = "Seleccionado";
-        boton.classList.add("seleccionado"); // Añadir estilo de selección
+        boton.classList.add("seleccionado");
     }
-
-    // Mostrar la retroalimentación de selección
     actualizarEstadoSeleccion();
 
-    // Si ya hay dos vehículos seleccionados, comparar
+    //Si ya hay dos vehículos seleccionados, se comparan
     if (vehiculosSeleccionados.length === 2) {
         compararVehiculos();
     } else {
@@ -583,7 +556,7 @@ function seleccionarVehiculo(id) {
     }
 }
 
-// Función para actualizar el mensaje de estado de selección
+//Función para actualizar el mensaje de estado de selección
 function actualizarEstadoSeleccion() {
     const mensajeSeleccion = document.getElementById("mensajeSeleccion") || document.createElement("p");
     mensajeSeleccion.id = "mensajeSeleccion";
@@ -591,7 +564,7 @@ function actualizarEstadoSeleccion() {
     document.getElementById("resultadosVehiculos").appendChild(mensajeSeleccion);
 }
 
-// Función para comparar los vehículos seleccionados
+//Función para comparar los vehículos seleccionados
 function compararVehiculos() {
     const [id1, id2] = vehiculosSeleccionados;
 
@@ -599,10 +572,10 @@ function compararVehiculos() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Ocultar los vehículos
+                //Oculta los vehículos
                 document.getElementById('resultadosVehiculos').style.display = 'none';
 
-                // Mostrar la tabla de comparación
+                //tabla de comparación
                 const comparacionDiv = document.getElementById('comparacionVehiculos');
                 comparacionDiv.style.display = 'block';
                 comparacionDiv.innerHTML = `<hr><br>
@@ -647,13 +620,13 @@ function compararVehiculos() {
         .catch(error => console.error('Error al comparar los vehículos:', error));
 }
 
-// Función para volver a la vista de selección
+//volver a la vista de selección
 function volverASeleccionar() {
-    // Mostrar los vehículos y ocultar la tabla de comparación
+    //Muestro los vehículos y oculto la tabla de comparación
     document.getElementById('resultadosVehiculos').style.display = 'flex';
     document.getElementById('comparacionVehiculos').style.display = 'none';
 
-    // Reiniciar la selección de vehículos
+    //Reinicio la selección de vehículos
     vehiculosSeleccionados = [];
     document.querySelectorAll('.seleccionar-btn').forEach(boton => {
         boton.textContent = "Seleccionar";
