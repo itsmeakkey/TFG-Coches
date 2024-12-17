@@ -9,28 +9,50 @@ class ReparacionBD
     }
 
     public static function agregar($vehiculoId, $fecha, $descripcion, $costo) {
-        $query = "INSERT INTO reparaciones (vehiculo_id, fecha, descripcion, costo) VALUES (:vehiculoId, :fecha, :descripcion, :costo)";
-        $id = self::conectar()->lastInsertId();
-        $stmt = self::conectar()->prepare($query);
-        $stmt->bindParam(':vehiculoId', $vehiculoId);
-        $stmt->bindParam(':fecha', $fecha);
-        $stmt->bindParam(':descripcion', $descripcion);
-        $stmt->bindParam(':costo', $costo);
-        if ($stmt->execute()) {
-            return [
-                'success' => true,
-                'reparacion' => [
-                    'id' => $id,
-                    'vehiculoId' => $vehiculoId,
-                    'fecha' => $fecha,
-                    'descripcion' => $descripcion,
-                    'costo' => $costo
-                ]
-            ];
-        } else {
-            return ['success' => false];
+        try {
+            // Inserta la reparación en la base de datos
+            $query = "INSERT INTO reparaciones (vehiculo_id, fecha, descripcion, costo) VALUES (:vehiculoId, :fecha, :descripcion, :costo)";
+            $stmt = self::conectar()->prepare($query);
+            $stmt->bindParam(':vehiculoId', $vehiculoId);
+            $stmt->bindParam(':fecha', $fecha);
+            $stmt->bindParam(':descripcion', $descripcion);
+            $stmt->bindParam(':costo', $costo);
+
+            if ($stmt->execute()) {
+                //D de la última reparación insertada
+                $id = self::conectar()->lastInsertId();
+
+                //marca y el modelo del vehículo asociado
+                $vehiculoQuery = "SELECT marca, modelo FROM vehiculos WHERE id = :vehiculoId";
+                $stmtVehiculo = self::conectar()->prepare($vehiculoQuery);
+                $stmtVehiculo->bindParam(':vehiculoId', $vehiculoId);
+                $stmtVehiculo->execute();
+
+                $vehiculo = $stmtVehiculo->fetch(PDO::FETCH_ASSOC);
+
+                if ($vehiculo) {
+                    return [
+                        'success' => true,
+                        'reparacion' => [
+                            'id' => $id,
+                            'marcaVehiculo' => $vehiculo['marca'],
+                            'modeloVehiculo' => $vehiculo['modelo'],
+                            'fecha' => $fecha,
+                            'descripcion' => $descripcion,
+                            'costo' => $costo
+                        ]
+                    ];
+                } else {
+                    return ['success' => false, 'error' => 'No se encontró el vehículo.'];
+                }
+            } else {
+                return ['success' => false, 'error' => 'Error al insertar la reparación.'];
+            }
+        } catch (PDOException $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
+
     public static function listar() {
         $query = "
         SELECT 
