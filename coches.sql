@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2024 a las 19:31:43
+-- Tiempo de generación: 18-12-2024 a las 16:17:17
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,12 +32,35 @@ USE `coches`;
 DROP TABLE IF EXISTS `pagos`;
 CREATE TABLE `pagos` (
   `id` int(11) NOT NULL,
-  `tipo` enum('único') NOT NULL,
   `descripcion` text DEFAULT NULL,
   `monto_total` decimal(10,2) NOT NULL,
   `metodo_pago` varchar(50) NOT NULL,
   `reserva_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reparaciones`
+--
+
+DROP TABLE IF EXISTS `reparaciones`;
+CREATE TABLE `reparaciones` (
+  `id` int(11) NOT NULL,
+  `vehiculo_id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `descripcion` text NOT NULL,
+  `costo` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reparaciones`
+--
+
+INSERT INTO `reparaciones` (`id`, `vehiculo_id`, `fecha`, `descripcion`, `costo`) VALUES
+(45, 2, '2024-12-01', 'Cambio de aceite y filtros', 75.00),
+(46, 3, '2024-12-01', 'Reemplazo de batería', 120.00),
+(52, 55, '2023-06-15', 'Inventada', 23.00);
 
 -- --------------------------------------------------------
 
@@ -122,7 +145,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `dni`, `apellidos`, `nombre`, `fechaNacimiento`, `telefono`, `correo`, `localidad`, `provincia`, `cp`, `tipo`, `password`, `token`) VALUES
 (1, '26050377W', 'Ruiz Aranda', 'David', '1999-06-15', '630031412', 'akkey@server.edu', 'Alcalá la Real', 'Jaén', '23680', 2, '$2y$15$K8Ii8OhSqw9z0UoQl6DWNesylnv94lhF8SsPVg1.Vss3LddvX7ej6', '602d1305678a8d5fdb372271e980da6a'),
-(30, '12345678A', 'Lopez', 'David', '1999-06-15', '123456789', 'alumno@server.edu', 'Jaén', 'Alcalá la Real', '23680', 1, '$2y$15$jSEh09IL1Jph.Jz4iUz4kuBVP/SEn6KlRWqO9k5bf0BXYFrYVo.Fy', 'aa942ab2bfa6ebda4840e7360ce6e7ef');
+(36, '52536633J', 'Ruiz Aranda', 'Cliente', '1999-06-15', '987654321', 'cliente@server.edu', 'Alcalá la Real', 'Jaén', '23680', 1, '$2y$15$Ovraze7CUYnYYjBfzfTx8eMHEHRa84CsruNsMk7x7X5k/sJKfftFm', '1d7f7abc18fcb43975065399b0d1e48e');
 
 -- --------------------------------------------------------
 
@@ -168,6 +191,13 @@ ALTER TABLE `pagos`
   ADD KEY `reserva_id` (`reserva_id`);
 
 --
+-- Indices de la tabla `reparaciones`
+--
+ALTER TABLE `reparaciones`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehiculo_id` (`vehiculo_id`);
+
+--
 -- Indices de la tabla `reservas`
 --
 ALTER TABLE `reservas`
@@ -209,31 +239,37 @@ ALTER TABLE `vehiculos`
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT de la tabla `reparaciones`
+--
+ALTER TABLE `reparaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT de la tabla `seguros`
 --
 ALTER TABLE `seguros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `vehiculos`
 --
 ALTER TABLE `vehiculos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=564;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=565;
 
 --
 -- Restricciones para tablas volcadas
@@ -244,6 +280,12 @@ ALTER TABLE `vehiculos`
 --
 ALTER TABLE `pagos`
   ADD CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `reparaciones`
+--
+ALTER TABLE `reparaciones`
+  ADD CONSTRAINT `reparaciones_ibfk_1` FOREIGN KEY (`vehiculo_id`) REFERENCES `vehiculos` (`id`);
 
 --
 -- Filtros para la tabla `reservas`

@@ -264,6 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //Agregar una nueva fila de reparación por AJAX
     function agregarFilaReparacion(reparacion) {
+        console.log('Reparación añadida:', reparacion); // Verifica el objeto reparacion
         const tbody = document.getElementById('reparaciones-list');
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -273,6 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <td><input type="number" value="${reparacion.costo}" data-campo="costo"></td>
 
         <td>
+            <input type="hidden" class="reparacion-id" value="${reparacion.id}">
             <button onclick="actualizarReparacion(${reparacion.id}, this)">Actualizar</button>
             <button class="eliminar" onclick="eliminarReparacion(${reparacion.id}, this)">Eliminar</button>
         </td>

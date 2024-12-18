@@ -10,21 +10,22 @@ class ReparacionBD
 
     public static function agregar($vehiculoId, $fecha, $descripcion, $costo) {
         try {
-            // Inserta la reparación en la base de datos
+            $db = self::conectar();
+
+            //Inserta la reparación en la base de datos
             $query = "INSERT INTO reparaciones (vehiculo_id, fecha, descripcion, costo) VALUES (:vehiculoId, :fecha, :descripcion, :costo)";
-            $stmt = self::conectar()->prepare($query);
+            $stmt = $db->prepare($query);
             $stmt->bindParam(':vehiculoId', $vehiculoId);
             $stmt->bindParam(':fecha', $fecha);
             $stmt->bindParam(':descripcion', $descripcion);
             $stmt->bindParam(':costo', $costo);
 
             if ($stmt->execute()) {
-                //D de la última reparación insertada
-                $id = self::conectar()->lastInsertId();
 
-                //marca y el modelo del vehículo asociado
+                $id = $db->lastInsertId();
+
                 $vehiculoQuery = "SELECT marca, modelo FROM vehiculos WHERE id = :vehiculoId";
-                $stmtVehiculo = self::conectar()->prepare($vehiculoQuery);
+                $stmtVehiculo = $db->prepare($vehiculoQuery);
                 $stmtVehiculo->bindParam(':vehiculoId', $vehiculoId);
                 $stmtVehiculo->execute();
 
@@ -52,6 +53,7 @@ class ReparacionBD
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
+
 
     public static function listar() {
         $query = "

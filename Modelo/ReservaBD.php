@@ -32,13 +32,30 @@ class ReservaBD
     public static function eliminar($id) {
         try {
             $conexion = new PDO('mysql:host=localhost;dbname=coches', 'root', 'Ciclo2gs');
-            $stmt = $conexion->prepare("DELETE FROM reservas WHERE id = ?");
-            $stmt->execute([$id]);
+
+            // Obtén el ID del vehículo asociado a la reserva
+            $stmtVehiculo = $conexion->prepare("SELECT vehiculo_id FROM reservas WHERE id = ?");
+            $stmtVehiculo->execute([$id]);
+            $vehiculo = $stmtVehiculo->fetch(PDO::FETCH_ASSOC);
+
+            if (!$vehiculo) {
+                return ['success' => false, 'error' => 'No se encontró la reserva.'];
+            }
+
+            //Elimino la reserva
+            $stmtEliminar = $conexion->prepare("DELETE FROM reservas WHERE id = ?");
+            $stmtEliminar->execute([$id]);
+
+            //Actualizo el estado del vehículo a 'Disponible'
+            $stmtActualizarVehiculo = $conexion->prepare("UPDATE vehiculos SET estado = 'Disponible' WHERE id = ?");
+            $stmtActualizarVehiculo->execute([$vehiculo['vehiculo_id']]);
+
             return ['success' => true];
         } catch (PDOException $e) {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
+
 
     public static function actualizar($id, $fechaInicio, $fechaFin) {
         try {
